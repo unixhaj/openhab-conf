@@ -1,0 +1,22 @@
+/* my stuff: mqtt */
+Number  katrine				"Telefon Batteri [%s %%]" <battery> (Mosquitto, katrine_Chart)
+Number  hans				"Telefon Batteri [%s %%]" <battery> (Mosquitto, hans_Chart)
+Number	katrine_distance		"Afstand til Hjem [%s km]" (Mosquitto)
+Number	hans_distance			"Afstand til Hjem [%s km]" (Mosquitto)
+String	katrine_location_street		"Gade [%s]"	(Mosquitto)
+String	hans_location_street		"Gade [%s]"	(Mosquitto)
+String	katrine_location_city		"By [%s]"	(Mosquitto)
+String	hans_location_city		"By [%s]"	(Mosquitto)
+String	katrine_location_country	"Land [%s]"	(Mosquitto)
+String	hans_location_country		"Land [%s]"	(Mosquitto)
+String	katrine_updated		"Opdateret [%s]"	(Mosquitto)
+String	hans_updated		"Opdateret [%s]"	(Mosquitto)
+Group hans_Chart
+Group katrine_Chart
+
+/*
+Number PresenceHans_Lat       "Hans Latitude [%.6f]"        <gps> (Mosquitto)    { mqtt="<[mqtt:/mqttitude/hans:state:REGEX(.*\"lat\"\\S\\s\"(-?\\d+\\.\\d+)\".*)]" }
+Number PresenceHans_Long      "Hans Longitude [%.6f]"       <gps> (Mosquitto)    { mqtt="<[mqtt:/mqttitude/hans:state:REGEX(.*\"lon\"\\S\\s\"(-?\\d+\\.\\d+)\".*)]" }
+Number PresenceKatrine_Lat       "Hans Latitude [%.6f]"        <gps> (Mosquitto)    { mqtt="<[mqtt:/mqttitude/katrine:state:REGEX(.*\"lat\"\\S\\s\"(-?\\d+\\.\\d+)\".*)]" }
+Number PresenceKatrine_Long      "Hans Longitude [%.6f]"       <gps> (Mosquitto)    { mqtt="<[mqtt:/mqttitude/katrine:state:REGEX(.*\"lon\"\\S\\s\"(-?\\d+\\.\\d+)\".*)]" }
+*/

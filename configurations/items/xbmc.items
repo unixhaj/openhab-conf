@@ -1,0 +1,10 @@
+String XBMC_State        "XBMC State [%s]"      	(xbmc)	{ xbmc="<[#livingRoom|Player.State]" }
+String XBMC_Type         "XBMC Type [%s]"   	   	(xbmc)	{ xbmc="<[#livingRoom|Player.Type]" }
+String XBMC_Title        "XBMC Title [%s]"        	(xbmc)	{ xbmc="<[#livingRoom|Player.Title]" }
+String XBMC_ShowTitle    "XBMC Show [%s]"      		(xbmc)	{ xbmc="<[#livingRoom|Player.ShowTitle]" }
+String XBMC_Fanart       "XBMC Fanart [%s]"      	(xbmc)	{ xbmc="<[#livingRoom|Player.Fanart]" }
+String XBMC_Artist       "XBMC Artist [%s]"      	(xbmc)	{ xbmc="<[#livingRoom|Player.Artist]" }
+String XBMC_Album  	 "XBMC Album [%s]"      	(xbmc)	{ xbmc="<[#livingRoom|Player.Album]" }
+Switch XBMC_PlayPause    "XBMC Play/Pause"     		(xbmc)	{ xbmc=">[#livingRoom|Player.PlayPause]", autoupdate="false" }
+Switch XBMC_Stop         "XBMC Stop"               	(xbmc)	{ xbmc=">[#livingRoom|Player.Stop]", autoupdate="false" }
+String XBMC_Notify       "XBMC Notify [%s]"     (Xbmc_Notify)	{ xbmc="<[#livingRoom|GUI.ShowNotification]", autoupdate="false" }

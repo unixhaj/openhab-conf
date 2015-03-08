@@ -1,0 +1,5 @@
+// persistence strategies have a name and a definition and are referred to in the "Items" section
+
+Items {
+	Termostat_Dag,Termostat_Nat,Presence*,Aeon1_Motion,Aeon2_Motion,Aeon3_Motion,occupiedState,automationState,Scene_General,Network*,Smoke*,ShakeBaby*,Aeon1*,Aeon2*,Aeon3*,Wind*,Temperature*,Weather_Chart*,Fibaroswitch_1_Use*,Fibaroswitch_1_Chart*,Fibaroswitch_2_Use*,Fibaroswitch_2_Chart*,Power*,Roomba* : strategy = everyChange, restoreOnStartup
+}

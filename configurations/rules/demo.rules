@@ -1,0 +1,1045 @@
+import org.openhab.core.library.types.*
+import org.openhab.core.persistence.*
+import org.openhab.model.script.actions.*
+
+var Number counter = 1
+var Timer timer = null
+var String hansFlag = null
+var String katrineFlag = null
+var String hanssnakFlag = null
+var String katrinesnakFlag = null
+var String motion1Flag = null
+var String motion2Flag = null
+var String motion3Flag = null
+var String motiontoiletFlag = null
+var String autolysiStuen = null
+var String autolys = null
+var String automatLysToilet = null
+var String hansOppe = null
+var String hansGaaet = true
+var String autohansmusik = false
+var String roombaHarKoert = false
+var String internetAlert = null
+var Number termostat = null
+var Number termostat_diff = null
+var Number termostat_base = null
+
+
+rule Startup
+when 
+System started
+then
+	logInfo("mylog", "OpenHAB er nu startet / genindlæst")
+        Thread::sleep(10000)
+	executeCommandLine("touch /opt/openhab/new/configurations/rules/*")
+end
+
+rule "Update max and min temperatures"
+when
+	Item Weather_Temperature changed or
+	Time cron "0 0 0 * * ?" or
+	System started
+then	
+	postUpdate(Weather_Temp_Max, Weather_Temperature.maximumSince(now.toDateMidnight).state)
+	postUpdate(Weather_Temp_Min, Weather_Temperature.minimumSince(now.toDateMidnight).state)
+end
+
+rule "Update max and min wind"
+when
+	Item Wind_Speed changed or
+	Time cron "0 0 0 * * ?" or
+	System started
+then	
+	postUpdate(Wind_Speed_Max, Wind_Speed.maximumSince(now.toDateMidnight).state)
+	postUpdate(Wind_Speed_Min, Wind_Speed.minimumSince(now.toDateMidnight).state)
+end
+
+rule "Update max and min temperatures Aeon1"
+when
+	Item Aeon1_Temp changed or
+	Time cron "0 0 0 * * ?" or
+	System started
+then	
+	postUpdate(Aeon1_Temp_Max, Aeon1_Temp.maximumSince(now.toDateMidnight).state)
+	postUpdate(Aeon1_Temp_Min, Aeon1_Temp.minimumSince(now.toDateMidnight).state)
+end
+
+rule "Update max and min lux Aeon1"
+when
+	Item Aeon1_Light changed or
+	Time cron "0 0 0 * * ?" or
+	System started
+then	
+	postUpdate(Aeon1_Light_Max, Aeon1_Light.maximumSince(now.toDateMidnight).state)
+	postUpdate(Aeon1_Light_Min, Aeon1_Light.minimumSince(now.toDateMidnight).state)
+end
+
+rule "Update max and min Humidity Aeon1"
+when
+	Item Aeon1_Humidity changed or
+	Time cron "0 0 0 * * ?" or
+	System started
+then	
+	postUpdate(Aeon1_Humidity_Max, Aeon1_Humidity.maximumSince(now.toDateMidnight).state)
+	postUpdate(Aeon1_Humidity_Min, Aeon1_Humidity.minimumSince(now.toDateMidnight).state)
+end
+
+rule "Update max and min temperatures Aeon2"
+when
+	Item Aeon2_Temp changed or
+	Time cron "0 0 0 * * ?" or
+	System started
+then	
+	postUpdate(Aeon2_Temp_Max, Aeon2_Temp.maximumSince(now.toDateMidnight).state)
+	postUpdate(Aeon2_Temp_Min, Aeon2_Temp.minimumSince(now.toDateMidnight).state)
+end
+
+rule "Update max and min lux Aeon2"
+when
+	Item Aeon2_Light changed or
+	Time cron "0 0 0 * * ?" or
+	System started
+then	
+	postUpdate(Aeon2_Light_Max, Aeon2_Light.maximumSince(now.toDateMidnight).state)
+	postUpdate(Aeon2_Light_Min, Aeon2_Light.minimumSince(now.toDateMidnight).state)
+end
+
+rule "Update max and min Humidity Aeon2"
+when
+	Item Aeon2_Humidity changed or
+	Time cron "0 0 0 * * ?" or
+	System started
+then	
+	postUpdate(Aeon2_Humidity_Max, Aeon2_Humidity.maximumSince(now.toDateMidnight).state)
+	postUpdate(Aeon2_Humidity_Min, Aeon2_Humidity.minimumSince(now.toDateMidnight).state)
+end
+
+rule "Update max and min temperatures Aeon3"
+when
+	Item Aeon3_Temp changed or
+	Time cron "0 0 0 * * ?" or
+	System started
+then	
+	postUpdate(Aeon3_Temp_Max, Aeon3_Temp.maximumSince(now.toDateMidnight).state)
+	postUpdate(Aeon3_Temp_Min, Aeon3_Temp.minimumSince(now.toDateMidnight).state)
+end
+
+rule "Update max and min lux Aeon3"
+when
+	Item Aeon3_Light changed or
+	Time cron "0 0 0 * * ?" or
+	System started
+then	
+	postUpdate(Aeon3_Light_Max, Aeon3_Light.maximumSince(now.toDateMidnight).state)
+	postUpdate(Aeon3_Light_Min, Aeon3_Light.minimumSince(now.toDateMidnight).state)
+end
+
+rule "Update max and min Humidity Aeon3"
+when
+	Item Aeon3_Humidity changed or
+	Time cron "0 0 0 * * ?" or
+	System started
+then	
+	postUpdate(Aeon3_Humidity_Max, Aeon3_Humidity.maximumSince(now.toDateMidnight).state)
+	postUpdate(Aeon3_Humidity_Min, Aeon3_Humidity.minimumSince(now.toDateMidnight).state)
+end
+
+rule "Update max and min temperatures FP1"
+when
+	Item FP1_Temp changed or
+	Time cron "0 0 0 * * ?" or
+	System started
+then	
+	postUpdate(FP1_Temp_Max, FP1_Temp.maximumSince(now.toDateMidnight).state)
+	postUpdate(FP1_Temp_Min, FP1_Temp.minimumSince(now.toDateMidnight).state)
+end
+
+rule "Update max and min lux FP1"
+when
+	Item FP1_Light changed or
+	Time cron "0 0 0 * * ?" or
+	System started
+then	
+	postUpdate(FP1_Light_Max, FP1_Light.maximumSince(now.toDateMidnight).state)
+	postUpdate(FP1_Light_Min, FP1_Light.minimumSince(now.toDateMidnight).state)
+end
+
+rule "Update max and min Humidity FP1"
+when
+	Item FP1_Humidity changed or
+	Time cron "0 0 0 * * ?" or
+	System started
+then	
+	postUpdate(FP1_Humidity_Max, FP1_Humidity.maximumSince(now.toDateMidnight).state)
+	postUpdate(FP1_Humidity_Min, FP1_Humidity.minimumSince(now.toDateMidnight).state)
+end
+
+rule "Sluk lyset occupiedState"
+when
+        Item occupiedState changed from ON to OFF
+then
+	logInfo("mylog", "Lejlighedstatus -> Ingen hjemme")
+        if (KatrineTelefon.state == OFF && lightautomationState.state == ON && HansTelefon.state == OFF && HansTelefonBT.state == OFF && KatrineTelefonBT.state == OFF && guestState.state == OFF)
+	{
+		sendCommand(Scene_General, 3)
+	//	sendCommand(Fibaroswitch_1, OFF)
+		sendCommand(Scene_Musik, 0)
+        }
+end
+
+rule "Dag temperatur adjustment"
+when
+	Time cron "0 */30 9,10,11,12,13,14,15,16,17,18,19,20,21 * * ?"
+then	
+	if (!Termostat_Dag.changedSince(now.minusHours(2)) {
+		executeCommandLine("/opt/openhab/scripts/adjust_temp Dag")
+	}
+end
+
+rule "Dag temperatur"
+when
+	Time cron "0 */5 6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21 * * ?"
+then	
+	if (heatautomationState.state == ON)
+	{
+		termostat_diff = Termostat_Diff_Dag.state
+		termostat_base = Termostat_Dag.state
+		termostat = (termostat_diff + termostat_base)
+//		logInfo("mylog", "Termostat: " + termostat)
+		sendCommand(Termostat_bed_setpoint, termostat)
+		sendCommand(Termostat_stue_setpoint, termostat)
+	}
+end
+
+rule "Nat temperatur adjustment"
+when
+	Time cron "0 */30 1,2,3,4,5,6 * * ?" 
+then	
+	if (!Termostat_Nat.changedSince(now.minusHours(2)) {
+		executeCommandLine("/opt/openhab/scripts/adjust_temp Nat")
+	}
+end
+
+rule "Nat temperatur"
+when
+	Time cron "0 */5 22,23,0,1,2,3,4,5,6 * * ?" 
+then	
+	if (heatautomationState.state == ON)
+	{
+		termostat_diff = Termostat_Diff_Nat.state
+		termostat_base = Termostat_Nat.state
+		termostat = (termostat_diff + termostat_base)
+//		logInfo("mylog", "Termostat: " + termostat)
+		sendCommand(Termostat_bed_setpoint, termostat)
+		sendCommand(Termostat_stue_setpoint, termostat)
+	}
+end
+
+rule "Update Katrine Anlæg status"
+when
+	Time cron "0 */10 * * * ?"
+then
+	if (Fibaroswitch_1_Use.state > 20)
+	{
+		sendCommand(Fibaroswitch_1, ON)
+	}
+end
+
+rule "Check router status voice alert if down"
+when
+	Time cron "0 35 8-21 * * ?"
+then
+	if (Router.state == OFF)
+	{
+		executeCommandLine("/usr/bin/mpg123-alsa -E /home/haj/equalizer /opt/openhab/sound/internet_nede.mp3")
+		internetAlert = true
+	}
+end
+
+rule "Check router status voice alert if up again"
+when
+        Item Router changed to ON
+then
+	if (internetAlert == true)
+	{
+		executeCommandLine("/usr/bin/mpg123-alsa -E /home/haj/equalizer /opt/openhab/sound/internet_oppe.mp3")
+		internetAlert = false
+	}
+end
+
+
+rule "Ping offline hosts"
+	Time cron "*/10 * * * * ?"
+then
+	if (HansTelefon.state != ON)
+	{
+		sendCommand(HansTelefonPing, ON)
+	}
+	if (KatrineTelefon.state != ON)
+	{
+		sendCommand(KatrineTelefonPing, ON)
+	}
+	if (Tablet.state != ON)
+	{
+		sendCommand(TabletPing, ON)
+	}
+end
+
+rule "Ping Online hosts"
+	Time cron "0 */5 * * * ?"
+then
+	if (HansTelefon.state == ON)
+	{
+		sendCommand(HansTelefonPing, ON)
+	}
+	if (KatrineTelefon.state == ON)
+	{
+		sendCommand(KatrineTelefonPing, ON)
+	}
+	if (Tablet.state == ON)
+	{
+		sendCommand(TabletPing, ON)
+	}
+end
+
+rule "check occupiedState"
+when
+        Time cron "*/5 * * * * ?"
+then
+	if ((HansTelefon.state == ON || KatrineTelefon.state == ON || HansTelefonBT.state == ON || KatrineTelefonBT.state == ON) && (occupiedState.state != ON))
+	{
+		sendCommand("occupiedState", "ON")
+		logInfo("mylog", "Lejlighedstatus -> Nogen hjemme")
+	} 
+        if (occupiedState.state == ON)
+        {
+		hansFlag = true
+		katrineFlag = true
+		motion1Flag = true
+		motion2Flag = true
+		motion3Flag = true
+		motiontoiletFlag = true
+                if (HansTelefon.state != ON && !HansTelefon.changedSince(now.minusMinutes(10)) && HansTelefonBT.state != ON && !HansTelefonBT.changedSince(now.minusMinutes(10)))
+		{
+//			logInfo("mylog", "Ingen Hans")
+		  	hansFlag = false
+		  	hanssnakFlag = false
+                }
+                if (KatrineTelefon.state != ON && !KatrineTelefon.changedSince(now.minusMinutes(10)) && KatrineTelefonBT.state != ON && !KatrineTelefonBT.changedSince(now.minusMinutes(10)))
+		{
+//			logInfo("mylog", "Ingen Katrine")
+			katrineFlag = false
+		  	katrinesnakFlag = false
+                }
+		if (Aeon1_Motion.state != OPEN && !Aeon1_Motion.changedSince(now.minusMinutes(10)))
+		{
+//			logInfo("mylog", "Motion 1")
+			motion1Flag = false
+		}
+		if (Aeon2_Motion.state != OPEN && !Aeon2_Motion.changedSince(now.minusMinutes(10)))
+		{
+//			logInfo("mylog", "Motion 2")
+			motion2Flag = false
+		}
+		if (Aeon3_Motion.state != OPEN && !Aeon3_Motion.changedSince(now.minusMinutes(5)))
+		{
+//			logInfo("mylog", "Motion 2")
+			motion3Flag = false
+		}
+                if (hansFlag == false && katrineFlag == false && motion1Flag == false && motion2Flag == false && motion3Flag == false)
+		{
+                        sendCommand("occupiedState", "OFF")
+			autolysiStuen = true
+			autolys = true
+		}
+		if (!Aeon1_Motion.changedSince(now.minusMinutes(60)) && Toggle_8.state == ON && Scene_General.state == 2 && lightautomationState.state == ON && Fibaroswitch_1.state == OFF)
+		{
+			sendCommand("Toggle_8", "OFF")
+		}
+		if (!Aeon1_Motion.changedSince(now.minusMinutes(90)) && Toggle_8.state == OFF && Toggle_9.state == ON && Scene_General.state == 2 && lightautomationState.state == ON && Fibaroswitch_1.state == OFF)
+		{
+			sendCommand("Toggle_9", "OFF")
+		}
+	}
+	if (ToiletMotion.state != OPEN && !ToiletMotion.changedSince(now.minusMinutes(5)))
+	{
+		motiontoiletFlag = false
+	}
+	if (motiontoiletFlag == false && motion3Flag == false && toiletautomationState.state == ON && Toggle_6.state == ON && !Toggle_6.changedSince(now.minusMinutes(5)))
+	{
+		sendCommand(Toggle_6, OFF)
+		if (Scene_General.state == 0 || Scene_General.state == 1 || Scene_General.state == 3 && Toggle_5.changedSince(now.minusMinutes(10)) && Aeon3_Motion.state == CLOSED) {
+			sendCommand(Toggle_5, OFF)
+		}
+	}
+end
+
+rule "Auto skru op for lys"
+when 
+	Item Aeon1_Motion changed to OPEN or
+	Time cron "*/5 * * * * ?"
+then
+	if (Toggle_3.state == ON && Toggle_8.state == OFF && Scene_General.state == 2 && lightautomationState.state == ON && Aeon1_Motion.state == OPEN)
+	{
+		sendCommand("Toggle_8", "ON")
+                Thread::sleep(100)
+	}
+	if (Toggle_3.state == ON && Toggle_9.state == OFF && Scene_General.state == 2 && lightautomationState.state == ON && Aeon1_Motion.state == OPEN)
+	{
+		sendCommand("Toggle_9", "ON")
+	}
+end
+
+rule "Motion Log"
+when 
+	Item Aeon1_Motion changed to OPEN
+then
+	if (occupiedState.state == OFF && Aeon1_Motion.state == OPEN && Roomba_Mode.state != 2)
+	{
+		logInfo("mylog", "Bevægelse i stue")
+	}
+end
+
+rule "aeon2 motion"
+when 
+	Item Aeon2_Motion changed to OPEN or
+then
+	if (occupiedState.state == OFF && Aeon2_Motion.state == OPEN)
+	{
+		logInfo("mylog", "Bevægelse i soveværelse")
+	}
+end 
+
+rule "aeon3 motion"
+when 
+	Item Aeon3_Motion changed to OPEN or
+then
+	if (occupiedState.state == OFF && Aeon3_Motion.state == OPEN)
+	{
+		logInfo("mylog", "Bevægelse i køkken")
+	}
+end
+
+rule "Auto Roomba"
+when 
+        Time cron "0 0/5 10-18 * * ?"
+then
+	
+//	logInfo("mylog", "RoombaDjob" + hans_distance.state)
+	if ((!Roomba_Mode.changedSince(now.minusHours(10))) && roombaautomationState.state == ON && KatrineTelefon.state != ON && HansTelefon.state != ON && guestState.state != ON && (2.5 < hans_distance.state) && (2.5 < katrine_distance.state)) {
+		logInfo("mylog", "Starter støvsuger")
+		sendCommand(Roomba_Mode, 2)
+		roombaHarKoert = true
+        }
+end
+
+
+
+// rule "parker Roomba"
+// when
+// 	Item PresenceHans_PhoneMqtt changed to ON or
+// 	Item PresenceKatrine_PhoneMqtt changed to ON
+// then
+// 	if (Roomba_Mode.state == 2) {
+// 		sendCommand(Roomba_Mode, 0)
+// 	}
+// end
+
+rule "lys i stuen naar ingen er hjemme"
+when
+	Time cron "0 */14 17,18,19,20,21,22,23 * * ?"
+then
+	if (occupiedState.state == OFF && guestState.state == OFF && autolysiStuen == true && Aeon1_Light.state < 50 && lightautomationState.state == ON && Toggle_3.state == OFF) 
+	{
+		logInfo("mylog", "Tænder vagtbelysning")
+		sendCommand(Toggle_3, ON)
+		autolysiStuen == false
+	}
+end
+
+rule "sluk lys i stuen naar ingen er hjemme"
+when
+	Time cron "0 33 0 * * ?"
+then
+	if (occupiedState.state == OFF && guestState.state == OFF && lightautomationState.state == ON)
+	{
+		logInfo("mylog", "Slukker vagtbelysning")
+		sendCommand(Toggle_3, OFF)
+	}
+end
+
+rule "Reset roomba"
+when	
+	Time cron "0 30 10 * * ?"
+then
+	roombaHarKoert = false
+end
+
+
+rule "taend lys toilet"
+when
+	Item ToiletMotion received update or
+	Item Aeon3_Motion received update
+then
+	if (toiletautomationState.state == ON && Toggle_6.state == OFF && (ToiletMotion.state == OPEN || Aeon3_Motion.state == OPEN) {
+		sendCommand(Toggle_6, ON)
+                Thread::sleep(100)
+		if (Scene_General.state == 0 || Scene_General.state == 1 || Scene_General.state == 3) {
+			sendCommand(Toggle_5, ON)
+		}
+		if (Scene_General.state == 0) {
+			executeCommandLine("/opt/openhab/scripts/huepl bri 6 0")
+                	Thread::sleep(100)
+			executeCommandLine("/opt/openhab/scripts/huepl bri 5 0")
+		else	{
+			executeCommandLine("/opt/openhab/scripts/huepl bri 6 200")
+                	Thread::sleep(100)
+			executeCommandLine("/opt/openhab/scripts/huepl bri 5 250")
+		}
+	}
+end
+
+rule "armer autolys"
+when
+	Time cron "0 0 15 * * ?"
+then
+	autolys = true
+	autohansmusik = true
+end
+
+rule "taend lyset automatisk"
+when
+        Time cron "0 */5 * * * ?"
+then
+	if (Aeon1_Light.state < 150 && lightautomationState.state == ON && autolys == true && occupiedState.state == ON && now.getHourOfDay() > 14 && now.getHourOfDay() < 23)
+	{
+		executeCommandLine("/opt/openhab/scripts/xbmcnotification Automatisk tænd af lys")
+		logInfo("mylog", "Automatisk tænd af lys - pga. lavt lys")
+		executeCommandLine("/opt/openhab/scripts/hueslow_force.sh")
+		autolys = false
+	}
+end
+
+rule "taend lyset automatisk 2"
+when
+        Item occupiedState changed from OFF to ON 
+then
+	if (Aeon1_Light.state < 120 && lightautomationState.state == ON && autolys == true && occupiedState.state == ON)
+	{
+		logInfo("mylog", "Automatisk tænd af lys")
+		sendCommand(Scene_General, 2)
+		autolys = false
+	}
+end
+
+rule "taend lyset automatisk ved røg"
+when
+	Item Smoke changed to OPEN
+then
+	sendCommand(Scene_General, 2)
+	logInfo("mylog", "Der er ILD i huset! RØGALARM")
+	executeCommandLine("/home/haj/bin/alarm.sh RØGALARM RØGALARM")
+end
+
+rule "reset lys"
+when
+	Time cron "0 0 6 ? * *"
+then
+	if (Scene_General.state == 0)
+	{
+		sendCommand(Scene_General, 3)
+	}
+end
+
+rule "hans skal op"
+when 
+	Time cron "0 45 7 ? * MON-FRI"
+then
+	if (HansVaekning.state == ON && (HansTelefon.state == ON || HansTelefonBT.state == ON))
+	{
+		logInfo("mylog", "Vækker Hans")
+		if (lightautomationState.state == ON && Aeon1_Light.state < 120)
+		{
+		sendCommand(Scene_General, 5)
+		hansOppe = true
+		}
+		executeCommandLine("/opt/openhab/scripts/godmorgen.sh")
+	}
+end
+
+rule "hans skal op 2"
+when 
+	Time cron "0 0 8 ? * MON-FRI"
+then
+	if (HansVaekning.state == ON && (!ToiletMotion.changedSince(now.minusMinutes(20))) && (HansTelefon.state == ON || HansTelefonBT.state == ON))
+	{
+		logInfo("mylog", "Vækker Hans #2")
+		executeCommandLine("/opt/openhab/scripts/godmorgen.sh")
+	}
+end
+
+rule "hans skal op 3"
+when 
+	Time cron "0 15 8 ? * MON-FRI"
+then
+	if (HansVaekning.state == ON && (!ToiletMotion.changedSince(now.minusMinutes(30))) && (HansTelefon.state == ON || HansTelefonBT.state == ON))
+	{
+		logInfo("mylog", "Vækker Hans #3")
+		executeCommandLine("/opt/openhab/scripts/godmorgen.sh")
+	}
+end
+
+rule "hans skal op panik"
+when 
+	Time cron "0 20 8 ? * MON-FRI"
+then
+	if (HansVaekning.state == ON && (!ToiletMotion.changedSince(now.minusMinutes(30))) && (HansTelefon.state == ON || HansTelefonBT.state == ON))
+	{
+		logInfo("mylog", "Vækker Hans PANISK")
+		executeCommandLine("/opt/openhab/scripts/godmorgen_for_satan.sh")
+	}
+end
+
+rule "hans er gaaet"
+when
+	Item HansTelefon changed from ON to OFF
+then
+	if (hansOppe == true && lightautomationState.state == ON)
+	{
+		logInfo("mylog", "Hans er gået")
+		sendCommand(Scene_General, 3)
+		hansGaaet = true
+		hansOppe = false
+	}
+end
+
+rule "mpd next"
+when
+	Item Mpd_Next received command ON
+then
+	Mpd_Next.state = OFF
+end
+
+
+rule "mpd prev"
+when
+	Item Mpd_Prev recieved command ON
+then
+	sendCommand(Mpd_Prev, OFF)
+end
+
+
+rule "Dørsensor For"
+when
+	Item Door_For changed to OPEN
+then
+	logInfo("mylog", "Fordør åben")
+	if (occupiedState.state == OFF) {
+      		Thread::sleep(10000)
+		executeCommandLine("/opt/openhab/scripts/sync_openhab")
+	} 
+	if (occupiedState.state == OFF) {
+      		Thread::sleep(10000)
+		executeCommandLine("/opt/openhab/scripts/sync_openhab")
+	} 
+      	Thread::sleep(10000)
+	executeCommandLine("/opt/openhab/scripts/sync_openhab")
+      	Thread::sleep(1000)
+	if (occupiedState.state == OFF) {
+		executeCommandLine("/home/haj/bin/alarm.sh Lejlighed: Fordør åben")
+	} 
+        if ((HansTelefon.state == ON && HansTelefon.historicState(now.minusMinutes(5)).state == OFF) || (HansTelefonBT.state == ON && HansTelefonBT.historicState(now.minusMinutes(5)).state == OFF) && (hanssnakFlag != true))
+	{
+		hanssnakFlag = true
+		logInfo("mylog", "Hans er kommet hjem")
+		executeCommandLine("/opt/openhab/scripts/welcomehome.sh hans")
+		Thread::sleep(15000)
+	}
+	if ((KatrineTelefon.state == ON && KatrineTelefon.historicState(now.minusMinutes(5)).state == OFF) || (KatrineTelefonBT.state == ON && KatrineTelefonBT.historicState(now.minusMinutes(5)).state == OFF) && katrinesnakFlag != true)
+	{
+		katrinesnakFlag = true
+		logInfo("mylog", "Katrine er kommet hjem")
+		executeCommandLine("/opt/openhab/scripts/welcomehome.sh katrine")
+		Thread::sleep(15000)
+	}
+end
+
+rule "Dørsensor For"
+when
+	Item Door_For changed to CLOSED
+then
+	logInfo("mylog", "Fordør lukket")
+end
+
+rule "Dørsensor Bag"
+when
+	Item Door_Bag changed to OPEN
+then
+	logInfo("mylog", "Bagdør åben")
+	executeCommandLine("/home/haj/bin/alarm.sh Lejlighed: Bagdør åben")
+end
+
+rule "Dørsensor Bag"
+when
+	Item Door_Bag changed to CLOSED
+then
+	logInfo("mylog", "Bagdør lukket")
+end
+
+rule "Hans Anlæg Sluk"
+	Item Scene_Musik changed to 0
+then
+	logInfo("mylog", "Hans anlæg slukket")
+	sendCommand(Fibaroswitch_2, OFF)
+	sendCommand(Mpd_Startstop, OFF)
+end
+
+rule "Hans Anlæg Blandet"
+	Item Scene_Musik changed to 1
+then
+	logInfo("mylog", "Hans anlæg tændt (blandet)")
+	if (Fibaroswitch_2.state == ON {
+		sendCommand(Mpd_Startstop, ON)
+		executeCommandLine("/opt/openhab/scripts/start_mpd playlist")
+	}
+	if (Fibaroswitch_2.state == OFF) {
+		sendCommand(Fibaroswitch_2, ON)
+	        Thread::sleep(15000)
+		sendCommand(Mpd_Startstop, ON)
+		executeCommandLine("/opt/openhab/scripts/start_mpd playlist")
+	}
+end
+
+rule "Hans Anlæg WeFunk"
+	Item Scene_Musik changed to 2
+then
+	logInfo("mylog", "Hans anlæg tændt (wefunk)")
+	if (Fibaroswitch_2.state == ON {
+		sendCommand(Mpd_Startstop, ON)
+		executeCommandLine("/opt/openhab/scripts/start_mpd_wefunk")
+	}
+	if (Fibaroswitch_2.state == OFF) {
+		sendCommand(Fibaroswitch_2, ON)
+	        Thread::sleep(15000)
+		sendCommand(Mpd_Startstop, ON)
+		executeCommandLine("/opt/openhab/scripts/start_mpd_wefunk")
+	}
+end
+
+rule "Hans Anlæg Blandet"
+	Item Scene_Musik changed to 3
+then
+	logInfo("mylog", "Hans anlæg tændt (THE HELL YOU DICK)")
+	if (Fibaroswitch_2.state == ON {
+		sendCommand(Mpd_Startstop, ON)
+		executeCommandLine("/opt/openhab/scripts/start_mpd thehellyoudick")
+	}
+	if (Fibaroswitch_2.state == OFF) {
+		sendCommand(Fibaroswitch_2, ON)
+	        Thread::sleep(15000)
+		sendCommand(Mpd_Startstop, ON)
+		executeCommandLine("/opt/openhab/scripts/start_mpd thehellyoudick")
+	}
+end
+
+rule "Hans Anlæg Blandet"
+	Item Scene_Musik changed to 4
+then
+	logInfo("mylog", "Hans anlæg tændt (Demon Head)")
+	if (Fibaroswitch_2.state == ON {
+		sendCommand(Mpd_Startstop, ON)
+		executeCommandLine("/opt/openhab/scripts/start_mpd demonhead")
+	}
+	if (Fibaroswitch_2.state == OFF) {
+		sendCommand(Fibaroswitch_2, ON)
+	        Thread::sleep(15000)
+		sendCommand(Mpd_Startstop, ON)
+		executeCommandLine("/opt/openhab/scripts/start_mpd demonhead")
+	}
+end
+
+rule "Temperatur holder"
+	Item Temperature changed
+then
+	if (Temperature.state > 22.5) {
+		println("too hot")
+	}
+	if (Temperature.state < 21.5) {
+		println("too cold")
+	}
+		
+end
+
+
+// Understående regler er primært til logning.
+
+rule "Toggle_1 log"
+	Item Toggle_1 changed
+then
+	if (Toggle_1.state == ON && !Scene_General.changedSince(now.minusMinutes(2))) {
+		logInfo("mylog", "Lys tændt, soveværelse")
+		executeCommandLine("/opt/openhab/scripts/reset_hue.sh 1")
+	}
+	if (Toggle_1.state == OFF && !Scene_General.changedSince(now.minusMinutes(2))) {
+		logInfo("mylog", "Lys slukket, soveværelse")
+	}
+end
+
+rule "Toggle_2 log"
+	Item Toggle_2 changed
+then
+	if (Toggle_2.state == ON && !Scene_General.changedSince(now.minusMinutes(2))) {
+		logInfo("mylog", "Lys tændt, gang")
+		executeCommandLine("/opt/openhab/scripts/reset_hue.sh 2")
+	}
+	if (Toggle_2.state == OFF && !Scene_General.changedSince(now.minusMinutes(2))) {
+		logInfo("mylog", "Lys slukket, gang")
+	}
+end
+
+rule "Toggle_3 log"
+	Item Toggle_3 changed
+then
+	if (Toggle_3.state == ON && !Scene_General.changedSince(now.minusMinutes(2))) {
+		logInfo("mylog", "Lys tændt, stue #1")
+		executeCommandLine("/opt/openhab/scripts/reset_hue.sh 3")
+	}
+	if (Toggle_3.state == OFF && !Scene_General.changedSince(now.minusMinutes(2))) {
+		logInfo("mylog", "Lys slukket, stue #1")
+	}
+end
+
+rule "Toggle_4 log"
+	Item Toggle_4 changed
+then
+	if (Toggle_4.state == ON && !Scene_General.changedSince(now.minusMinutes(2))) {
+		logInfo("mylog", "Lys tændt, komfur")
+		executeCommandLine("/opt/openhab/scripts/reset_hue.sh 4")
+	}
+	if (Toggle_4.state == OFF && !Scene_General.changedSince(now.minusMinutes(2))) {
+		logInfo("mylog", "Lys slukket, komfur")
+	}
+end
+
+rule "Toggle_5 log"
+	Item Toggle_5 changed
+then
+	if (Toggle_5.state == ON && !Scene_General.changedSince(now.minusMinutes(2))) {
+		logInfo("mylog", "Lys tændt, opvask")
+		executeCommandLine("/opt/openhab/scripts/reset_hue.sh 5")
+	}
+	if (Toggle_5.state == OFF && !Scene_General.changedSince(now.minusMinutes(2))) {
+		logInfo("mylog", "Lys slukket, opvask")
+	}
+end
+
+rule "Toggle_6 log"
+	Item Toggle_6 changed
+then
+	if (Toggle_6.state == ON && !Scene_General.changedSince(now.minusMinutes(2)) && occupiedState.state != ON) {
+		logInfo("mylog", "Lys tændt, toilet")
+	}
+	if (Toggle_6.state == OFF && !Scene_General.changedSince(now.minusMinutes(2)) && occupiedState.state != ON) {
+		logInfo("mylog", "Lys slukket, toilet")
+	}
+end
+
+rule "Toggle_7 log"
+	Item Toggle_7 changed
+then
+	if (Toggle_7.state == ON && !Scene_General.changedSince(now.minusMinutes(2))) {
+		logInfo("mylog", "Lys tændt, hyggelampe")
+	}
+	if (Toggle_7.state == OFF && !Scene_General.changedSince(now.minusMinutes(2))) {
+		logInfo("mylog", "Lys slukket, hyggelampe")
+	}
+end
+
+rule "Toggle_8 log"
+	Item Toggle_8 changed
+then
+	if (Toggle_8.state == ON && !Scene_General.changedSince(now.minusMinutes(2))) {
+		logInfo("mylog", "Lys tændt, stue #2")
+		executeCommandLine("/opt/openhab/scripts/reset_hue.sh 8")
+	}
+	if (Toggle_8.state == OFF && !Scene_General.changedSince(now.minusMinutes(2))) {
+		logInfo("mylog", "Lys slukket, stue #2")
+	}
+end
+
+rule "Toggle_9 log"
+	Item Toggle_9 changed
+then
+	if (Toggle_9.state == ON && !Scene_General.changedSince(now.minusMinutes(2))) {
+		logInfo("mylog", "Lys tændt, stue #3")
+		executeCommandLine("/opt/openhab/scripts/reset_hue.sh 9")
+	}
+	if (Toggle_9.state == OFF && !Scene_General.changedSince(now.minusMinutes(2))) {
+		logInfo("mylog", "Lys slukket, stue #3")
+	}
+end
+
+rule "Set scenes and XBMC"
+	Time cron "0 * * * * ?"
+then
+	if (Toggle_1.state == ON && Toggle_2.state == ON && Toggle_3.state == ON && Toggle_8.state == ON && Toggle_9.state == ON && Toggle_4.state == ON && Toggle_5.state == ON && !Scene_General.changedSince(now.minusMinutes(2)) && Scene_General.state != 2) {
+		sendCommand(Scene_General, 2)
+	}
+	if (TV_Status.state == ON && HansTelefon.state == ON && XBMC_State.state == "Stop" && !XBMC_State.changedSince(now.minusMinutes(25)) && XBMC_State.changedSince(now.minusMinutes(30)) && Scene_General.state != 0 && PS3.state == OFF) {
+		executeCommandLine("/opt/openhab/scripts/xbmcnotification TV slukker snart")
+	}
+	if (TV_Status.state == ON && HansTelefon.state == ON && XBMC_State.state == "Stop" && !XBMC_State.changedSince(now.minusMinutes(31)) && XBMC_State.changedSince(now.minusMinutes(32)) && Scene_General.state != 0 && PS3.state == OFF) {
+		logInfo("mylog", "Automatisk sluk af TV")
+		sendCommand(TV_Status, OFF)
+	}
+	if (TV_Status.state == ON && HansTelefon.state == ON && XBMC_State.state == "Stop" && !XBMC_State.changedSince(now.minusMinutes(1)) && XBMC_State.changedSince(now.minusMinutes(4)) && Scene_General.state == 0 && PS3.state == OFF) {
+		executeCommandLine("/opt/openhab/scripts/xbmcnotification TV slukker snart")
+	}
+	if (TV_Status.state == ON && HansTelefon.state == ON && XBMC_State.state == "Stop" && !XBMC_State.changedSince(now.minusMinutes(4)) && XBMC_State.changedSince(now.minusMinutes(5)) && Scene_General.state == 0 && PS3.state == OFF) {
+		logInfo("mylog", "Automatisk sluk af TV")
+		sendCommand(TV_Status, OFF)
+	}
+end
+	
+
+rule "KatrineTelefon log"
+	Item KatrineTelefon changed
+then
+	if (KatrineTelefon.state == ON) {
+		logInfo("mylog", "Katrines telefon er gået på wifi")
+		executeCommandLine("/opt/openhab/scripts/xbmcnotification Katrines telefon er gået på wifi")
+	}
+	if (KatrineTelefon.state == OFF) {
+		logInfo("mylog", "Katrines telefon er gået af wifi")
+	}
+end
+
+rule "HansTelefon log"
+	Item HansTelefon changed
+then
+	if (HansTelefon.state == ON) {
+		logInfo("mylog", "Hans telefon er gået på wifi")
+//		executeCommandLine("/opt/openhab/scripts/xbmcnotification Hans telefon er gået på wifi")
+	}
+	if (HansTelefon.state == OFF) {
+		logInfo("mylog", "Hans telefon er gået af wifi")
+	}
+end
+
+rule "KatrineTelefonBT log"
+	Item KatrineTelefonBT changed
+then
+	if (KatrineTelefonBT.state == ON) {
+		logInfo("mylog", "Katrines telefon kan ses med Bluetooth")
+	}
+	if (KatrineTelefonBT.state == OFF) {
+		logInfo("mylog", "Katrines telefon er væk på Bluetooth")
+	}
+end
+
+rule "HansTelefonBT log"
+	Item HansTelefonBT changed
+then
+	if (HansTelefonBT.state == ON) {
+		logInfo("mylog", "Hans telefon kan ses med Bluetooth")
+	}
+	if (HansTelefonBT.state == OFF) {
+		logInfo("mylog", "Hans telefon er væk på Bluetooth")
+	}
+end
+
+rule "HansLaptop log"
+	Item HansLaptop changed
+then
+	if (HansLaptop.state == ON) {
+		logInfo("mylog", "Hans laptop er gået på wifi")
+	}
+	if (HansLaptop.state == OFF) {
+		logInfo("mylog", "Hans laptop er gået af wifi")
+	}
+end
+
+rule "KatrineLaptop log"
+	Item KatrineLaptop changed
+then
+	if (KatrineLaptop.state == ON) {
+		logInfo("mylog", "Katrines laptop er gået på wifi")
+	}
+	if (KatrineLaptop.state == OFF) {
+		logInfo("mylog", "Katrines laptop er gået af wifi")
+	}
+end
+
+rule "MacBook log"
+	Item MacBook changed
+then
+	if (MacBook.state == ON) {
+		logInfo("mylog", "MacBook er gået på wifi")
+	}
+	if (MacBook.state == OFF) {
+		logInfo("mylog", "MacBook er gået af wifi")
+	}
+end
+ 
+rule "PC log"
+	Item PC changed
+then
+	if (PC.state == ON) {
+		logInfo("mylog", "PC startet op")
+	}
+	if (PC.state == OFF) {
+		logInfo("mylog", "PC slukket")
+	}
+end
+
+rule "PS3 log"
+	Item PC changed
+then
+	if (PS3.state == ON) {
+		logInfo("mylog", "PS3 tændt")
+	}
+	if (PS3.state == OFF) {
+		logInfo("mylog", "PS3 slukket")
+	}
+end
+ 
+rule "Tablet log"
+	Item Tablet changed
+then
+	if (Tablet.state == ON) {
+		logInfo("mylog", "Tablet er gået på wifi")
+	}
+	if (Tablet.state == OFF) {
+		logInfo("mylog", "Tablet er gået af wifi")
+	}
+end
+ 
+rule "TV_Status log"
+	Item TV_Status changed
+then
+	if (TV_Status.state == ON) {
+		logInfo("mylog", "TV tændt")
+	}
+	if (TV_Status.state == OFF) {
+		logInfo("mylog", "TV slukket")
+	}
+end
+ 
+rule "Roomba_Job log"
+	Item Roomba_Job changed
+then
+	logInfo("mylog", "Roomba Status: " + Roomba_Job.state)
+end
+
+rule "XBMC_State log"
+	Item XBMC_State changed
+then
+	logInfo("mylog", "Medieplayer: " + XBMC_State.state)
+end
+
+rule "Kattebakke"
+	Item FozzieLast changed
+then
+	logInfo("mylog", FozzieWeight.state + "g kat laver " + FozzieShit.state + "g prut, på " + FozzieTime.state + " sekunder")
+end
+

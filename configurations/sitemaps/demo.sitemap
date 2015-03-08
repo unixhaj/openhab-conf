@@ -1,0 +1,506 @@
+sitemap demo label="Hovedmenu"
+{
+	Frame {
+/*		Group item=Switching label="Lys" icon="firstfloor" */
+//		Switch item=Switching label="Lys (Alle)" icon="light-on" mappings=[ON="Tænd",OFF="Sluk"]
+//		Switch item=nightState icon="bedroom" mappings=[ON="Til",OFF="Fra"]
+		Selection item=Scene_General label="Tilstand" mappings=[0="Godnat", 1="Film & TV", 2="Alt Lys", 3="Intet Lys", 4="Lys Stue+Toilet+Køkken", 5="Lys Gang+Toilet+Køkken"]
+		Group item=Switching label="Lamper" icon="lightbulb"
+/*		Group item=WhiteDimmer label="Lys (daemper)" icon="cellar"	 */
+		Switch item=TV_Status
+		Switch item=Fibaroswitch_1 
+//		Switch item=Fibaroswitch_2
+		Selection item=Scene_Musik icon="subwoofer" mappings=[0="OFF", 1="Blandet Musik", 2="WeFunk Radio", 3="THE HELL (YOU DICK)", 4="Demon Head"]
+	}
+	Frame label="Status" {
+		Text item=occupiedState icon="present"
+		Text label="Hvor er folk?" icon="map" {
+			Frame label="Katrine" {
+				//Webview url="/static/katrine.html" height=10
+				Text item=katrine
+				Text item=katrine_location_street
+				Text item=katrine_location_city
+				Text item=katrine_location_country
+				Text item=katrine_distance
+				Text item=katrine_updated
+			}
+			Frame label="Hans" {
+				//Webview url="/static/hans.html" height=10
+				Text item=hans
+				Text item=hans_location_street
+				Text item=hans_location_city
+				Text item=hans_location_country
+				Text item=hans_distance
+				Text item=hans_updated
+			}
+		}
+	}
+
+	Frame label="Temperatur" {
+		Text item=AvgTemperature {
+			Frame {
+				Chart item=AvgTemperature period=D refresh=10000
+				Chart item=AvgTemperature period=W refresh=10000
+				Chart item=AvgTemperature period=M refresh=10000
+				Chart item=AvgTemperature period=Y refresh=10000
+			}
+		}
+		Text item=WeatherAvg {
+			Frame {
+				Text item=Weather_Temp_Max
+				Text item=Weather_Temp_Min
+			}
+			Frame {
+				Chart item=Weather_Chart period=D refresh=10000
+				Chart item=Weather_Chart period=W refresh=10000
+				Chart item=Weather_Chart period=M refresh=10000
+				Chart item=Weather_Chart period=Y refresh=10000
+			}
+		}
+		Text item=Wind_Speed {
+			Frame {
+				Text item=Wind_Speed_Max
+				Text item=Wind_Speed_Min
+			}
+			Frame {
+				Chart item=Wind_Chart period=D refresh=10000
+				Chart item=Wind_Chart period=W refresh=10000
+				Chart item=Wind_Chart period=M refresh=10000
+				Chart item=Wind_Chart period=Y refresh=10000
+			}
+		}
+		Text item=YahooWeatherCode icon="yahoo_weather"
+	}
+
+
+
+//	Frame label="Musik" {
+//		Switch item=Mpd_Startstop label="Tænd/Sluk" icon="smiley"
+//		Switch item=Mpd_Next label="Næste" icon="smiley" mappings=[ON="Go!"]
+//		Switch item=Mpd_Prev label="Forrige" icon="smiley" mappings=[ON="Go!"]
+//		Switch item=Mpd_Next_Prev label="Next/Prev" icon="smiley" mappings=[ON="N", OFF="P"]
+//	}
+
+	Frame label="Støvsuger" {
+		Selection item=Roomba_Mode label="Roomba" mappings=[0="Ready", 1="Dock", 2="Støvsug", 3="Kattebakke", 4="Tøm Roomba"]
+		//Selection item=Roomba_Mode label="Roomba" mappings=[0="Dock", 1="Stop", 2="Støvsug", 3="Kattebakke", 4="Tøm Roomba"]
+		Text item=Roomba_Job
+	}
+			
+	Frame label="Udvidet Status og Indstillinger" {
+		Text label="Automatisering og andre indstillinger" icon="system_monitor" {
+			Switch item=lightautomationState
+			Switch item=toiletautomationState
+			Switch item=roombaautomationState
+			Switch item=HansVaekning
+			Switch item=heatautomationState
+			Switch item=guestState
+			Setpoint item=Termostat_Dag minValue=5 maxValue=28 step=0.5
+			Setpoint item=Termostat_Nat minValue=5 maxValue=28 step=0.5
+		}
+		Text label="Lys, Luft, Varme og Strøm" icon="system_monitor" {
+			Text item=Aeon1_Temp {
+				Frame {
+					Text item=Aeon1_Temp_Max
+					Text item=Aeon1_Temp_Min
+				}
+				Frame {
+					Chart item=Aeon1_Temp_Chart period=D refresh=10000
+					Chart item=Aeon1_Temp_Chart period=W refresh=10000
+					Chart item=Aeon1_Temp_Chart period=M refresh=10000
+					Chart item=Aeon1_Temp_Chart period=Y refresh=10000
+				}
+			}
+			Text item=Aeon2_Temp {
+				Frame {
+					Text item=Aeon2_Temp_Max
+					Text item=Aeon2_Temp_Min
+				}
+				Frame {
+					Chart item=Aeon2_Temp_Chart period=D refresh=10000
+					Chart item=Aeon2_Temp_Chart period=W refresh=10000
+					Chart item=Aeon2_Temp_Chart period=M refresh=10000
+					Chart item=Aeon2_Temp_Chart period=Y refresh=10000
+				}
+			}
+			Text item=Aeon3_Temp {
+				Frame {
+					Text item=Aeon3_Temp_Max
+					Text item=Aeon3_Temp_Min
+				}
+				Frame {
+					Chart item=Aeon3_Temp_Chart period=D refresh=10000
+					Chart item=Aeon3_Temp_Chart period=W refresh=10000
+					Chart item=Aeon3_Temp_Chart period=M refresh=10000
+					Chart item=Aeon3_Temp_Chart period=Y refresh=10000
+				}
+			}
+			Text item=FP1_Temp {
+				Frame {
+					Text item=FP1_Temp_Max
+					Text item=FP1_Temp_Min
+				}
+				Frame {
+					Chart item=FP1_Temp_Chart period=D refresh=10000
+					Chart item=FP1_Temp_Chart period=W refresh=10000
+					Chart item=FP1_Temp_Chart period=M refresh=10000
+					Chart item=FP1_Temp_Chart period=Y refresh=10000
+				}
+			}
+			Text item=Aeon1_Light {
+				Frame {
+					Text item=Aeon1_Light_Max
+					Text item=Aeon1_Light_Min
+				}
+				Frame {
+					Chart item=Aeon1_Light_Chart period=D refresh=10000
+					Chart item=Aeon1_Light_Chart period=W refresh=10000
+					Chart item=Aeon1_Light_Chart period=M refresh=10000
+					Chart item=Aeon1_Light_Chart period=Y refresh=10000
+				}
+			}
+			Text item=Aeon2_Light {
+				Frame {
+					Text item=Aeon2_Light_Max
+					Text item=Aeon2_Light_Min
+				}
+				Frame {
+					Chart item=Aeon2_Light_Chart period=D refresh=10000
+					Chart item=Aeon2_Light_Chart period=W refresh=10000
+					Chart item=Aeon2_Light_Chart period=M refresh=10000
+					Chart item=Aeon2_Light_Chart period=Y refresh=10000
+				}
+			}
+			Text item=FP1_Light {
+				Frame {
+					Text item=FP1_Light_Max
+					Text item=FP1_Light_Min
+				}
+				Frame {
+					Chart item=FP1_Light_Chart period=D refresh=10000
+					Chart item=FP1_Light_Chart period=W refresh=10000
+					Chart item=FP1_Light_Chart period=M refresh=10000
+					Chart item=FP1_Light_Chart period=Y refresh=10000
+				}
+			}
+			Text item=FP1_Humidity {
+				Frame {
+					Text item=FP1_Humidity_Max
+					Text item=FP1_Humidity_Min
+				}
+				Frame {
+					Chart item=FP1_Humidity_Chart period=D refresh=10000
+					Chart item=FP1_Humidity_Chart period=W refresh=10000
+					Chart item=FP1_Humidity_Chart period=M refresh=10000
+					Chart item=FP1_Humidity_Chart period=Y refresh=10000
+				}
+			}
+			Text item=Aeon1_Humidity {
+				Frame {
+					Text item=Aeon1_Humidity_Max
+					Text item=Aeon1_Humidity_Min
+				}
+				Frame {
+					Chart item=Aeon1_Humidity_Chart period=D refresh=10000
+					Chart item=Aeon1_Humidity_Chart period=W refresh=10000
+					Chart item=Aeon1_Humidity_Chart period=M refresh=10000
+					Chart item=Aeon1_Humidity_Chart period=Y refresh=10000
+				}
+			}
+			Text item=Aeon2_Humidity {
+				Frame {
+					Text item=Aeon2_Humidity_Max
+					Text item=Aeon2_Humidity_Min
+				}
+				Frame {
+					Chart item=Aeon2_Humidity_Chart period=D refresh=10000
+					Chart item=Aeon2_Humidity_Chart period=W refresh=10000
+					Chart item=Aeon2_Humidity_Chart period=M refresh=10000
+					Chart item=Aeon2_Humidity_Chart period=Y refresh=10000
+				}
+			}
+			Text item=Aeon3_Humidity {
+				Frame {
+					Text item=Aeon3_Humidity_Max
+					Text item=Aeon3_Humidity_Min
+				}
+				Frame {
+					Chart item=Aeon3_Humidity_Chart period=D refresh=10000
+					Chart item=Aeon3_Humidity_Chart period=W refresh=10000
+					Chart item=Aeon3_Humidity_Chart period=M refresh=10000
+					Chart item=Aeon3_Humidity_Chart period=Y refresh=10000
+				}
+			}
+			Text item=Fibaroswitch_1_Use {
+				Frame label="Katrine Anlæg" {
+					Chart item=Fibaroswitch_1_Chart period=D refresh=10000
+					Chart item=Fibaroswitch_1_Chart period=W refresh=10000
+					Chart item=Fibaroswitch_1_Chart period=M refresh=10000
+					Chart item=Fibaroswitch_1_Chart period=Y refresh=10000
+				}
+			}
+			Text item=Fibaroswitch_2_Use {
+				Frame label="Hans Anlæg" {
+					Chart item=Fibaroswitch_2_Chart period=D refresh=10000
+					Chart item=Fibaroswitch_2_Chart period=W refresh=10000
+					Chart item=Fibaroswitch_2_Chart period=M refresh=10000
+					Chart item=Fibaroswitch_2_Chart period=Y refresh=10000
+				}
+			}
+			Text item=Roomba_Voltage icon="user_bender" {
+				Frame label="Roomba Batteri Volt" {
+					Chart item=Roomba_Voltage_Chart period=D refresh=10000
+					Chart item=Roomba_Voltage_Chart period=W refresh=10000
+					Chart item=Roomba_Voltage_Chart period=M refresh=10000
+					Chart item=Roomba_Voltage_Chart period=Y refresh=10000
+				}
+			}
+			Text item=katrine icon="user_bender" {
+				Frame label="Katrine Telefon Batteri" {
+					Chart item=katrine_Chart period=D refresh=10000
+					Chart item=katrine_Chart period=W refresh=10000
+					Chart item=katrine_Chart period=M refresh=10000
+					Chart item=katrine_Chart period=Y refresh=10000
+				}
+			}
+			Text item=hans icon="user_bender" {
+				Frame label="Hans Telefon Batteri" {
+					Chart item=hans_Chart period=D refresh=10000
+					Chart item=hans_Chart period=W refresh=10000
+					Chart item=hans_Chart period=M refresh=10000
+					Chart item=hans_Chart period=Y refresh=10000
+				}
+			}
+			Text item=FP1_Battery icon="user_bender" {
+				Frame label="Flower Power Batteri" {
+					Chart item=FP1_Battery_Chart period=D refresh=10000
+					Chart item=FP1_Battery_Chart period=W refresh=10000
+					Chart item=FP1_Battery_Chart period=M refresh=10000
+					Chart item=FP1_Battery_Chart period=Y refresh=10000
+				}
+			}
+		}
+		Text label="Udvidet Status & Avanceret" icon="system_monitor" {
+			Group label="Fozzie Test" icon="cat" {
+			Text item=FozzieWeight icon="cat" {
+				Frame label="Fozzie Fed" {
+//					Chart item=FozzieWeight_Chart period=D refresh=10000
+					Chart item=FozzieWeight_Chart period=W refresh=10000
+					Chart item=FozzieWeight_Chart period=M refresh=10000
+					Chart item=FozzieWeight_Chart period=Y refresh=10000
+				}
+			}
+			Text item=FozzieShit icon="user_bender" {
+				Frame label="Fozzie Lort+Tis" {
+//					Chart item=FozzieShit_Chart period=D refresh=10000
+					Chart item=FozzieShit_Chart period=W refresh=10000
+					Chart item=FozzieShit_Chart period=M refresh=10000
+					Chart item=FozzieShit_Chart period=Y refresh=10000
+				}
+			}
+			Text item=FozzieTime icon="user_bender" {
+				Frame label="Fozzie Tid på bakken" {
+//					Chart item=FozzieTime_Chart period=D refresh=10000
+					Chart item=FozzieTime_Chart period=W refresh=10000
+					Chart item=FozzieTime_Chart period=M refresh=10000
+					Chart item=FozzieTime_Chart period=Y refresh=10000
+				}
+			}
+			Text item=FozzieLast icon="user_bender"
+			}
+			Group label="Arduino Test All" item=Arduino icon="user_bender" 
+			Group label="Arduino Test" icon="user_bender" {
+			Text item=ArduinoLDR icon="user_bender" {
+				Frame label="LDR" {
+					Chart item=ArduinoLDR_Chart period=D refresh=10000
+					Chart item=ArduinoLDR_Chart period=W refresh=10000
+					Chart item=ArduinoLDR_Chart period=M refresh=10000
+					Chart item=ArduinoLDR_Chart period=Y refresh=10000
+				}
+			}
+			Text item=ArduinoSmoke icon="user_bender" {
+				Frame label="Smoke" {
+					Chart item=ArduinoSmoke_Chart period=D refresh=10000
+					Chart item=ArduinoSmoke_Chart period=W refresh=10000
+					Chart item=ArduinoSmoke_Chart period=M refresh=10000
+					Chart item=ArduinoSmoke_Chart period=Y refresh=10000
+				}
+			}
+			Text item=ArduinoDHThumid icon="user_bender" {
+				Frame label="DHThumid" {
+					Chart item=ArduinoDHThumid_Chart period=D refresh=10000
+					Chart item=ArduinoDHThumid_Chart period=W refresh=10000
+					Chart item=ArduinoDHThumid_Chart period=M refresh=10000
+					Chart item=ArduinoDHThumid_Chart period=Y refresh=10000
+				}
+			}
+			Text item=ArduinoDHTtemp icon="user_bender" {
+				Frame label="DHTtemp" {
+					Chart item=ArduinoDHTtemp_Chart period=D refresh=10000
+					Chart item=ArduinoDHTtemp_Chart period=W refresh=10000
+					Chart item=ArduinoDHTtemp_Chart period=M refresh=10000
+					Chart item=ArduinoDHTtemp_Chart period=Y refresh=10000
+				}
+			}
+			Text item=ArduinoBMP180temp icon="user_bender" {
+				Frame label="BMP180temp" {
+					Chart item=ArduinoBMP180temp_Chart period=D refresh=10000
+					Chart item=ArduinoBMP180temp_Chart period=W refresh=10000
+					Chart item=ArduinoBMP180temp_Chart period=M refresh=10000
+					Chart item=ArduinoBMP180temp_Chart period=Y refresh=10000
+				}
+			}
+			Text item=ArduinoPressure icon="user_bender" {
+				Frame label="Pressurep" {
+					Chart item=ArduinoPressure_Chart period=D refresh=10000
+					Chart item=ArduinoPressure_Chart period=W refresh=10000
+					Chart item=ArduinoPressure_Chart period=M refresh=10000
+					Chart item=ArduinoPressure_Chart period=Y refresh=10000
+				}
+			}
+			}
+			Group item=ZWave label="Alt Zwave" icon="firstfloor" 
+			Group item=Astro label="Astro - Solopgang og nedgang" icon="sun" 
+			Group item=Roomba label="Roomba Info" icon="user_bender"
+			Group item=Network label="Netværk og Bluetooth" icon="firstfloor" 
+			Text label="Medieplayer" icon="video" {
+				Switch item=XBMC_PlayPause label="Play" icon="play" mappings=[ON="Play"] visibility=[XBMC_State==Pause]
+				Switch item=XBMC_PlayPause label="Pause" icon="pause" mappings=[ON="Pause"] visibility=[XBMC_State==Play]
+				Switch item=XBMC_Stop label="Stop" mappings=[ON="Stop"] visibility=[XBMC_State==Play, XBMC_State==Pause]
+				Text item=XBMC_State label="XBMC State [%s]"
+				Text item=XBMC_Type label="XBMC Type [%s]"
+			}
+			Text label="Cracksrv" icon="computer" {
+				Text item=Cracksrv_Root icon="computer" {
+						Frame label="Cracksrv Diskplads /" {
+						Chart item=Cracksrv_Root_Chart period=D refresh=10000
+						Chart item=Cracksrv_Root_Chart period=W refresh=10000
+						Chart item=Cracksrv_Root_Chart period=M refresh=10000
+						Chart item=Cracksrv_Root_Chart period=Y refresh=10000
+					}
+				}
+				Text item=Cracksrv_Average icon="computer" {
+					Frame label="Cracksrv Diskplads /space" {
+						Chart item=Cracksrv_Average_Chart period=D refresh=10000
+						Chart item=Cracksrv_Average_Chart period=W refresh=10000
+						Chart item=Cracksrv_Average_Chart period=M refresh=10000
+						Chart item=Cracksrv_Average_Chart period=Y refresh=10000
+					}
+				}
+				Text item=Cracksrv_Load icon="computer" {
+					Frame label="Cracksrv Load Average" {
+						Chart item=Cracksrv_Load_Chart period=D refresh=10000
+						Chart item=Cracksrv_Load_Chart period=W refresh=10000
+						Chart item=Cracksrv_Load_Chart period=M refresh=10000
+						Chart item=Cracksrv_Load_Chart period=Y refresh=10000
+					}
+				}
+				Text item=Cracksrv_MHz icon="computer" {
+					Frame label="Cracksrv MHz (Gennemsnit)" {
+						Chart item=Cracksrv_MHz_Chart period=D refresh=10000
+						Chart item=Cracksrv_MHz_Chart period=W refresh=10000
+						Chart item=Cracksrv_MHz_Chart period=M refresh=10000
+						Chart item=Cracksrv_MHz_Chart period=Y refresh=10000
+					}
+				}
+				Text item=Cracksrv_Temp icon="computer" {
+					Frame label="Cracksrv CPU Temp" {
+						Chart item=Cracksrv_Temp_Chart period=D refresh=10000
+						Chart item=Cracksrv_Temp_Chart period=W refresh=10000
+						Chart item=Cracksrv_Temp_Chart period=M refresh=10000
+						Chart item=Cracksrv_Temp_Chart period=Y refresh=10000
+					}
+				}
+				Text item=Cracksrv_Mem icon="computer" {
+				Frame label="Cracksrv MEM Used" {
+						Chart item=Cracksrv_Mem_Chart period=D refresh=10000
+						Chart item=Cracksrv_Mem_Chart period=W refresh=10000
+						Chart item=Cracksrv_Mem_Chart period=M refresh=10000
+						Chart item=Cracksrv_Mem_Chart period=Y refresh=10000
+					}
+				}
+				Text item=Cracksrv_Tor icon="computer" {
+				Frame label="Cracksrv TOR connections" {
+						Chart item=Cracksrv_Tor_Chart period=D refresh=10000
+						Chart item=Cracksrv_Tor_Chart period=W refresh=10000
+						Chart item=Cracksrv_Tor_Chart period=M refresh=10000
+						Chart item=Cracksrv_Tor_Chart period=Y refresh=10000
+					}
+				}
+				Text item=Cracksrv_Bcache_Hit_Ratio icon="computer" {
+				Frame label="Cracksrv Bcache Hit Ratio" {
+						Chart item=Cracksrv_Bcache_Hit_Ratio_Chart period=D refresh=10000
+						Chart item=Cracksrv_Bcache_Hit_Ratio_Chart period=W refresh=10000
+						Chart item=Cracksrv_Bcache_Hit_Ratio_Chart period=M refresh=10000
+						Chart item=Cracksrv_Bcache_Hit_Ratio_Chart period=Y refresh=10000
+					}
+				}
+				Text item=Cracksrv_Bcache_Wearout icon="computer" {
+				Frame label="Cracksrv Bcache SSD Wearout" {
+						Chart item=Cracksrv_Bcache_Wearout_Chart period=W refresh=10000
+						Chart item=Cracksrv_Bcache_Wearout_Chart period=M refresh=10000
+						Chart item=Cracksrv_Bcache_Wearout_Chart period=Y refresh=10000
+					}
+				}
+			}
+			Text label="Datacenter" icon="computer" {
+				Text item=Datacenter_Root icon="computer" {
+						Frame label="Datacenter Diskplads /" {
+						Chart item=Datacenter_Root_Chart period=D refresh=10000
+						Chart item=Datacenter_Root_Chart period=W refresh=10000
+						Chart item=Datacenter_Root_Chart period=M refresh=10000
+						Chart item=Datacenter_Root_Chart period=Y refresh=10000
+					}
+				}
+				Text item=Datacenter_Vz icon="computer" {
+					Frame label="Datacenter Diskplads /Vz" {
+						Chart item=Datacenter_Vz_Chart period=D refresh=10000
+						Chart item=Datacenter_Vz_Chart period=W refresh=10000
+						Chart item=Datacenter_Vz_Chart period=M refresh=10000
+						Chart item=Datacenter_Vz_Chart period=Y refresh=10000
+					}
+				}
+				Text item=Datacenter_VzSecure icon="computer" {
+					Frame label="Datacenter Diskplads /VzSecure" {
+						Chart item=Datacenter_VzSecure_Chart period=D refresh=10000
+						Chart item=Datacenter_VzSecure_Chart period=W refresh=10000
+						Chart item=Datacenter_VzSecure_Chart period=M refresh=10000
+						Chart item=Datacenter_VzSecure_Chart period=Y refresh=10000
+					}
+				}
+				Text item=Datacenter_Backup icon="computer" {
+					Frame label="Datacenter Diskplads /Backup" {
+						Chart item=Datacenter_Backup_Chart period=D refresh=10000
+						Chart item=Datacenter_Backup_Chart period=W refresh=10000
+						Chart item=Datacenter_Backup_Chart period=M refresh=10000
+						Chart item=Datacenter_Backup_Chart period=Y refresh=10000
+					}
+				}
+				Text item=Datacenter_Load icon="computer" {
+					Frame label="Datacenter Load Average" {
+						Chart item=Datacenter_Load_Chart period=D refresh=10000
+						Chart item=Datacenter_Load_Chart period=W refresh=10000
+						Chart item=Datacenter_Load_Chart period=M refresh=10000
+						Chart item=Datacenter_Load_Chart period=Y refresh=10000
+					}
+				}
+				Text item=Datacenter_Temp icon="computer" {
+					Frame label="Datacenter CPU Temp" {
+						Chart item=Datacenter_Temp_Chart period=D refresh=10000
+						Chart item=Datacenter_Temp_Chart period=W refresh=10000
+						Chart item=Datacenter_Temp_Chart period=M refresh=10000
+						Chart item=Datacenter_Temp_Chart period=Y refresh=10000
+					}
+				}
+				Text item=Datacenter_Mem icon="computer" {
+				Frame label="Datacenter MEM Used" {
+						Chart item=Datacenter_Mem_Chart period=D refresh=10000
+						Chart item=Datacenter_Mem_Chart period=W refresh=10000
+						Chart item=Datacenter_Mem_Chart period=M refresh=10000
+						Chart item=Datacenter_Mem_Chart period=Y refresh=10000
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,432 @@
+Group All
+Group gGF 		(All)
+Group gFF 		(All)
+Group gC 		(All)
+Group Outdoor 	(All)
+Group Shutters 	(All)
+Group Weather 	(All)
+Group Wind	(All)
+Group Status 	(All)
+Group ZWave	(All)
+Group Switching (All)
+Group Colorize (All)
+Group WhiteDimmer (All)
+Group CTDimmer (All)
+Group Network (All)
+Group Music   (All)
+Group Lux      (All)
+Group Humidity (All)
+Group Mosquitto (All)
+Group Roomba	(All)
+Group Termostat (All)
+Group Termostater (All)
+Group xbmc (All)
+
+Group:Number:AVG                                AvgTemperature     "Temperatur, indendørs [%.1f °C]"       <temperature>   (Status)
+
+/* my stuff: hue */
+
+Switch Toggle_1		"Soveværelset"	<bedroom>	(Switching) { exec="OFF:/opt/openhab/scripts/huepl off 1, ON:/opt/openhab/scripts/huepl on 1" }
+Switch Toggle_2		"Gangen"	<corridor>	(Switching) { exec="OFF:/opt/openhab/scripts/huepl off 2, ON:/opt/openhab/scripts/huepl on 2" }
+Switch Toggle_4		"Komfur"	<kitchen>	(Switching) { exec="OFF:/opt/openhab/scripts/huepl off 4, ON:/opt/openhab/scripts/huepl on 4" }
+Switch Toggle_5		"Opvask"	<kitchen>	(Switching) { exec="OFF:/opt/openhab/scripts/huepl off 5, ON:/opt/openhab/scripts/huepl on 5" }
+Switch Toggle_6		"Toilet"	<toilet_pan>	(Switching) { exec="OFF:/opt/openhab/scripts/huepl off 6, ON:/opt/openhab/scripts/huepl on 6" }
+Switch Toggle_7		"Hygge Lampe"	<bedroom>	(Switching) { exec="OFF:/opt/openhab/scripts/huepl off 7, ON:/opt/openhab/scripts/huepl on 7" }
+Switch Toggle_3		"Stuen #1"	<sofa>		(Switching) { exec="OFF:/opt/openhab/scripts/huepl off 3, ON:/opt/openhab/scripts/huepl on 3" }
+Switch Toggle_8		"Stuen #2"	<sofa>		(Switching) { exec="OFF:/opt/openhab/scripts/huepl off 8, ON:/opt/openhab/scripts/huepl on 8" }
+Switch Toggle_9		"Stuen #3"	<sofa>		(Switching) { exec="OFF:/opt/openhab/scripts/huepl off 9, ON:/opt/openhab/scripts/huepl on 9" }
+
+/* my stuff: network */
+
+Switch KatrineTelefon           "Katrine Telefon" <phone_vintage> (Network)   
+Switch HansTelefon              "Hans Telefon" <phone_vintage>  (Network) 
+Switch HansLaptop               "Hans Laptop" <laptop> (Network)
+Switch KatrineLaptop		"Katrine Laptop" <laptop> (Network)   { nh="KatrineLaptop:139" }
+Switch MacBook                  "MacBook" <apple_corp> (Network)   { nh="MacBook" }
+Switch PS3                  "PS3" <pie> (Network)   { nh="PS3" }
+Switch PC                  "HackMac" <apple_corp> (Network)   { nh="PC" }
+Switch Tablet                   "Tablet" <ipad>  (Network)
+/*    { nh="Tablet" } */
+Switch Hue                      "Hue" <lightbulb>  (Network)   { nh="Hue" }
+Switch TV			"TV" <video>	(Network)	{ nh="TV" }
+Switch Router			"Router" <network>	(Network)	{ nh="Router" }
+
+
+/* my stuff: TV */
+Switch TV_Status		"TV" <video>				{ exec="ON:/opt/openhab/scripts/TVon_hdmi2, OFF:/opt/openhab/scripts/TVoff" }	
+
+Switch KatrineTelefonBT           "Katrine Telefon (BT)" <phone_vintage> (Network)   
+Switch HansTelefonBT              "Hans Telefon (BT)" <phone_vintage>  (Network) 
+Switch TabletBT                   "Tablet (BT)" <ipad>  (Network)
+Switch TVBT			"TV (BT)" <video>	(Network)
+
+Switch HansTelefonPing		"HansTelefonPing"	{ exec="ON:/opt/openhab/scripts/sync_openhab_phones HansTelefon" }
+Switch KatrineTelefonPing	"KatrineTelefonPing"	{ exec="ON:/opt/openhab/scripts/sync_openhab_phones KatrineTelefon" }
+Switch TabletPing		"HansTelefonPing"	{ exec="ON:/opt/openhab/scripts/sync_openhab_phones Tablet" }
+
+
+/* my stuff: zwave */
+
+String ZwaveNode01HomeID    "Home ID [%s]" (gZwaveNode01) {zwave="1:1:command=info,item=home_id"}
+Number ZwaveNode01NetworkID "Node ID [%s]" (gZwaveNode01) {zwave="1:1:command=info,item=node_id"}
+Number    ZWaveStats_SOF              "Start Of Frames [%d]"         <calculator>   (ZWave)      { zwave="1:command=INFO,item=SOF" }
+Number    ZWaveStats_CAN              "Cancelled Frames [%d]"        <calculator>   (ZWave)      { zwave="1:command=INFO,item=CAN" }
+Number    ZWaveStats_NAK              "Not Acknowledged Frames [%d]" <calculator>   (ZWave)      { zwave="1:command=INFO,item=NAK" }
+Number    ZWaveStats_OOF              "Out Of Order Frames [%d]"     <calculator>   (ZWave)      { zwave="1:command=INFO,item=OOF" }
+Number    ZWaveStats_ACK              "Acknowledged Frames [%d]"     <calculator>   (ZWave)      { zwave="1:command=INFO,item=ACK" }
+Number    ZWaveStats_TimeOut          "Timed Out Packets [%d]"       <calculator>   (ZWave)      { zwave="1:command=INFO,item=TIME_OUT" }
+Switch    ZWaveNode1Dead              "Node 1 Død"                         <zwavedead>    (ZWave)  { zwave="1:command=INFO,item=DEAD" }
+
+
+
+Number Termostat_bed_battery             "Termostat, soveværelse, batteri [%s %%]"   <battery>   (Termostater, ZWave)      {zwave="35:command=battery"}
+Number Termostat_bed_setpoint            "Termostat, soveværelse [%s °C]"  <heating> (Termostater, ZWave) {zwave="35:command=thermostat_setpoint"}
+Switch    Termostat_bed_dead              "Termostat, soveværelse, Død"                         <zwavedead>    (ZWave)  { zwave="35:command=INFO,item=DEAD" }
+Number Termostat_stue_battery             "Termostat, stue, batteri [%s %%]"   <battery>   (Termostater, ZWave)      {zwave="36:command=battery"}
+Number Termostat_stue_setpoint            "Termostat, stue [%s °C]"  <heating> (Termostater, ZWave) {zwave="36:command=thermostat_setpoint"}
+Switch    Termostat_stue_dead              "Termostat, stue, Død"                         <zwavedead>    (ZWave)  { zwave="36:command=INFO,item=DEAD" }
+
+Number Termostat_Dag			"Termostater, Dag (7-22) [%s °C]"	<heating>	(Termostater)
+Number Termostat_Nat			"Termostater, Nat (22-7) [%s °C]"	<heating>	(Termostater)
+Number Termostat_Diff_Dag			"Termostater, Target Dag [%s °C]"	<heating>	(Termostater)
+Number Termostat_Diff_Nat			"Termostater, Target Nat [%s °C]"	<heating>	(Termostater)
+
+
+Contact Aeon1_Motion		"Bevægelse, stue [%s]"     <pie>   (Aeon1, ZWave)     {zwave="41:command=sensor_binary"}
+Number Aeon1_Battery 		"Sensor, stue, batteri [%s %%]"		<battery>           (Aeon1, ZWave)      {zwave="41:command=battery"}
+Switch    Aeon1_Dead		"Sensor, stue, Død"			<zwavedead>    (ZWave)  { zwave="41:command=INFO,item=DEAD" }
+
+Group Aeon1_Temp_Chart													(Temperature)
+Number Aeon1_Temp        "Temperatur, stue [%.1f °C]"   <temperature> (Aeon1, ZWave, Aeon1_Temp_Chart, AvgTemperature)      {zwave="41:command=sensor_multilevel,sensor_type=1"}
+Number Aeon1_Temp_Max 		"Todays Maximum [%.1f °C]"	<temperature> (__Aeon1_Temp_Chart)
+Number Aeon1_Temp_Min 		"Todays Minimum [%.1f °C]"	<temperature> (__Aeon1_Temp_Chart)
+
+Group Aeon1_Light_Chart													(Lux)
+Number Aeon1_Light              "Lys, stue [%.0f Lux]"   <sun>         (Aeon1, ZWave, Aeon1_Light_Chart)      {zwave="41:command=sensor_multilevel,sensor_type=3"}
+Number Aeon1_Light_Max 		"Todays Maximum [%.1f Lux]"	<sun> (__Aeon1_Light_Chart)
+Number Aeon1_Light_Min 		"Todays Minimum [%.1f Lux]"	<sun> (__Aeon1_Light_Chart)
+
+Group Aeon1_Humidity_Chart												(Humidity)
+Number Aeon1_Humidity   "Luftfugtighed, stue [%.0f %%]"  <garden>     (Aeon1, ZWave, Aeon1_Humidity_Chart)      {zwave="41:command=sensor_multilevel,sensor_type=5"}
+Number Aeon1_Humidity_Max 		"Todays Maximum [%.1f %%]"	<garden> (__Aeon1_Humidity_Chart)
+Number Aeon1_Humidity_Min 		"Todays Minimum [%.1f %%]"	<garden> (__Aeon1_Humidity_Chart)
+
+Contact Aeon2_Motion           "Bevægelse, soveværelse [%s]"     <pie>   (Aeon2, ZWave)     {zwave="40:command=sensor_binary"}
+Number Aeon2_Battery    "Sensor, soveværelse, batteri [%s %%]"              <battery>           (Aeon2, ZWave)      {zwave="40:command=battery"}
+Switch    Aeon2_Dead              "Sensor, soveværelse, Død"                         <zwavedead>    (ZWave)  { zwave="40:command=INFO,item=DEAD" }
+
+Group Aeon2_Temp_Chart													(Temperature)
+Number Aeon2_Temp        "Temperatur, soveværelse [%.1f °C]"   <temperature> (Aeon2, ZWave, Aeon2_Temp_Chart, AvgTemperature)      {zwave="40:command=sensor_multilevel,sensor_type=1"}
+Number Aeon2_Temp_Max 		"Todays Maximum [%.1f °C]"	<temperature> (__Aeon2_Temp_Chart)
+Number Aeon2_Temp_Min 		"Todays Minimum [%.1f °C]"	<temperature> (__Aeon2_Temp_Chart)
+
+Group Aeon2_Light_Chart													(Lux)
+Number Aeon2_Light              "Lys, soveværelse [%.0f Lux]"   <sun>         (Aeon2, ZWave, Aeon2_Light_Chart)      {zwave="40:command=sensor_multilevel,sensor_type=3"}
+Number Aeon2_Light_Max 		"Todays Maximum [%.1f Lux]"	<sun> (__Aeon2_Light_Chart)
+Number Aeon2_Light_Min 		"Todays Minimum [%.1f Lux]"	<sun> (__Aeon2_Light_Chart)
+
+Group Aeon2_Humidity_Chart												(Humidity)
+Number Aeon2_Humidity   "Luftfugtighed, soveværelse [%.0f %%]"  <garden>     (Aeon2, ZWave, Aeon2_Humidity_Chart)      {zwave="40:command=sensor_multilevel,sensor_type=5"}
+Number Aeon2_Humidity_Max 		"Todays Maximum [%.1f %%]"	<garden> (__Aeon2_Humidity_Chart)
+Number Aeon2_Humidity_Min 		"Todays Minimum [%.1f %%]"	<garden> (__Aeon2_Humidity_Chart)
+
+Contact Aeon3_Motion           "Bevægelse, køkken [%s]"     <cat>   (Aeon3, ZWave)     {zwave="39:command=sensor_binary"}
+Number Aeon3_Battery    "Sensor, køkken, batteri [%s %%]"              <battery>           (Aeon3, ZWave)      {zwave="39:command=battery"}
+Switch    Aeon3_Dead              "Sensor, køkken, Død"                         <zwavedead>    (ZWave)  { zwave="39:command=INFO,item=DEAD" }
+
+Group Aeon3_Temp_Chart													(TemperatureCat)
+Number Aeon3_Temp        "Temperatur, køkken [%.1f °C]"   <temperature> (Aeon3, ZWave, Aeon3_Temp_Chart)      {zwave="39:command=sensor_multilevel,sensor_type=1"}
+Number Aeon3_Temp_Max 		"Todays Maximum [%.1f °C]"	<temperature> (__Aeon3_Temp_Chart)
+Number Aeon3_Temp_Min 		"Todays Minimum [%.1f °C]"	<temperature> (__Aeon3_Temp_Chart)
+
+Group Aeon3_Light_Chart													(Lux)
+Number Aeon3_Light              "Lys, køkken [%.0f Lux]"   <sun>         (Aeon3, ZWave, Aeon3_Light_Chart)      {zwave="39:command=sensor_multilevel,sensor_type=3"}
+Number Aeon3_Light_Max 		"Todays Maximum [%.1f Lux]"	<sun> (__Aeon3_Light_Chart)
+Number Aeon3_Light_Min 		"Todays Minimum [%.1f Lux]"	<sun> (__Aeon3_Light_Chart)
+
+Group Aeon3_Humidity_Chart												(Humidity)
+Number Aeon3_Humidity   "Luftfugtighed, køkken [%.0f %%]"  <garden>     (Aeon3, ZWave, Aeon3_Humidity_Chart)      {zwave="39:command=sensor_multilevel,sensor_type=5"}
+Number Aeon3_Humidity_Max 		"Todays Maximum [%.1f %%]"	<garden> (__Aeon3_Humidity_Chart)
+Number Aeon3_Humidity_Min 		"Todays Minimum [%.1f %%]"	<garden> (__Aeon3_Humidity_Chart)
+
+
+Contact Smoke           "Røgalarm [%s]"     <alarm_bell>   (Smoke, ZWave)     {zwave="43:command=BASIC"}
+Number Smoke_Battery    "Røgalarm batteri [%s %%]"              <battery>           (Smoke, ZWave)      {zwave="43:command=battery"}
+Switch    Smoke_Dead             "Røgalarm, Død"                         <zwavedead>    (ZWave)  { zwave="43:command=INFO,item=DEAD" }
+
+Contact ToiletMotion           "Toilet bevægelse [%s]"     <toilet>   (ZWave)     {zwave="49:command=SENSOR_BINARY"}
+Number ToiletMotionBattery    "Toilet bevægelse batteri [%s %%]"              <battery>           (ZWave)      {zwave="49:command=battery"}
+
+// Contact ShakeBaby	"Rystesensor [%s]"	<pie>	(Shake, ZWave)		{zwave="6:1:command=BASIC"}
+// Number ShakeBaby_Battery    "Rystesensor batteri [%s %%]"              <battery>           (Shake, ZWave)      {zwave="6:command=battery"}
+
+Contact Door_For	"Dørsensor, gang [%s]"	<door>	(Door, ZWave)		{zwave="45:command=BASIC"}
+Number Door_For_Battery    "Dørsensor, gang, batteri [%s %%]"              <battery>           (Door, ZWave)      {zwave="45:command=battery"}
+Switch    Door_For_Dead              "Dørsensor, for, Død"                         <zwavedead>    (ZWave)  { zwave="45:command=INFO,item=DEAD" }
+
+Contact Door_Bag	"Dørsensor, bagtrappe [%s]"	<door>	(Door, ZWave)		{zwave="44:command=BASIC"}
+Number Door_Bag_Battery    "Dørsensor, bagtrappe, batteri [%s %%]"              <battery>           (Door, ZWave)      {zwave="44:command=battery"}
+Switch    Door_Bag_Dead              "Dørsensor, bag, Død"                         <zwavedead>    (ZWave)  { zwave="44:command=INFO,item=DEAD" }
+
+
+Switch Multiswitch_1_1	"Switch Gang, venstre op [%s]"	<pie>			(Multiswitch)	{zwave="46:command=scene_activation,scene=11,state=1"}
+Switch Multiswitch_1_2	"Switch Gang, venstre ned [%s]"	<pie>			(Multiswitch)	{zwave="46:command=scene_activation,scene=12,state=1"}
+Switch Multiswitch_1_3	"Switch Gang, højre op [%s]"	<pie>			(Multiswitch)	{zwave="46:command=scene_activation,scene=21,state=1"}
+Switch Multiswitch_1_4	"Switch Gang, højre ned [%s]"	<pie>			(Multiswitch)	{zwave="46:command=scene_activation,scene=22,state=1"}
+Switch Multiswitch_1_5	"Switch Gang, dobbelt venstre op [%s]"	<pie>		(Multiswitch)	{zwave="46:command=scene_activation,scene=31,state=1"}
+Switch Multiswitch_1_6	"Switch Gang, dobbelt venstre ned [%s]"	<pie>		(Multiswitch)	{zwave="46:command=scene_activation,scene=32,state=1"}
+Switch Multiswitch_1_7	"Switch Gang, dobbelt højre op [%s]"	<pie>		(Multiswitch)	{zwave="46:command=scene_activation,scene=41,state=1"}
+Switch Multiswitch_1_8	"Switch Gang, dobbelt højre ned [%s]"	<pie>		(Multiswitch)	{zwave="46:command=scene_activation,scene=42,state=1"}
+
+Switch Multiswitch_2_1	"Switch Sove, venstre op [%s]"	<pie>			(Multiswitch)	{zwave="32:command=scene_activation,scene=11,state=1"}
+Switch Multiswitch_2_2	"Switch Sove, venstre ned [%s]"	<pie>			(Multiswitch)	{zwave="32:command=scene_activation,scene=12,state=1"}
+Switch Multiswitch_2_3	"Switch Sove, højre op [%s]"	<pie>			(Multiswitch)	{zwave="32:command=scene_activation,scene=21,state=1"}
+Switch Multiswitch_2_4	"Switch Sove, højre ned [%s]"	<pie>			(Multiswitch)	{zwave="32:command=scene_activation,scene=22,state=1"}
+Switch Multiswitch_2_5	"Switch Sove, dobbelt venstre op [%s]"	<pie>		(Multiswitch)	{zwave="32:command=scene_activation,scene=31,state=1"}
+Switch Multiswitch_2_6	"Switch Sove, dobbelt venstre ned [%s]"	<pie>		(Multiswitch)	{zwave="32:command=scene_activation,scene=32,state=1"}
+Switch Multiswitch_2_7	"Switch Sove, dobbelt højre op [%s]"	<pie>		(Multiswitch)	{zwave="32:command=scene_activation,scene=41,state=1"}
+Switch Multiswitch_2_8	"Switch Sove, dobbelt højre ned [%s]"	<pie>		(Multiswitch)	{zwave="32:command=scene_activation,scene=42,state=1"}
+
+
+Number Multiswitch_1_Battery    "Multiswitch Gang, batteri [%s %%]" <battery>   	(Multiswitch, ZWave)	{zwave="33:command=battery"}
+Number Multiswitch_2_Battery    "Multiswitch Sove, batteri [%s %%]" <battery>   	(Multiswitch, ZWave)	{zwave="32:command=battery"}
+
+Switch Fibaroswitch_1		"Katrine Anlæg"			<mixer>		(Fibaroswitch, ZWave)	{zwave="38:command=basic"}
+Group Fibaroswitch_1_Chart							(Power)
+Number Fibaroswitch_1_Use	"Katrine Anlæg, forbrug [%s]"	<energy>		(Fibaroswitch, ZWave, Fibaroswitch_1_Chart)	{zwave="38:command=sensor_multilevel,sensor_type=4"}
+Switch    Fibaroswitch_1_Dead              "Katrine Anlæg Kontakt, Død"                         <zwavedead>    (ZWave)  { zwave="38:command=INFO,item=DEAD" }
+
+Switch Fibaroswitch_2		"Hans Anlæg"			<switch>	(Fibaroswitch, ZWave)	{zwave="37:command=basic"}
+Group Fibaroswitch_2_Chart							(Power)
+Number Fibaroswitch_2_Use	"Hans Anlæg, forbrug [%s]"	<energy>		(Fibaroswitch, ZWave, Fibaroswitch_2_Chart)	{zwave="37:command=sensor_multilevel,sensor_type=4"}
+Switch    Fibaroswitch_2_Dead              "Hans Anlæg Kontakt, Død"                         <zwavedead>    (ZWave)  { zwave="37:command=INFO,item=DEAD" }
+
+/* my stuff: weather */
+Group:Number:AVG                                WeatherAvg     "Temperatur, udendørs [%.1f °C]"       <temperature>   (Status)
+Group Weather_Chart													(Weather)
+Number Weather_Temperature 		"Temperatur, København [%.1f °C]"	<temperature> (Weather_Chart, WeatherAvg) { http="<[http://weather.yahooapis.com/forecastrss?w=554890&u=c:60000:XSLT(yahoo_weather_temperature.xsl)]" }
+Number Weather_Temperature_Taastrup 		"Temperatur, Taastrup [%.1f °C]"	<temperature> (Weather_Chart, WeatherAvg) { http="<[http://weather.yahooapis.com/forecastrss?w=12717941&u=c:60000:XSLT(yahoo_weather_temperature.xsl)]" }
+Number Weather_Temperature_Malmo 		"Temperatur, Malmø [%.1f °C]"	<temperature> (Weather_Chart, WeatherAvg) { http="<[http://weather.yahooapis.com/forecastrss?w=898091&u=c:60000:XSLT(yahoo_weather_temperature.xsl)]" }
+Number Weather_Temp_Max 		"Højeste idag [%.1f °C]"	<temperature> (__Weather_Chart)
+Number Weather_Temp_Min 		"Laveste idag [%.1f °C]"	<temperature> (__Weather_Chart)
+Number Weather_Chart_Period		"Chart Period"
+
+Number YahooWeatherCode "Vejret idag [MAP(yahoo_weather_code.map):%s]" (weather) { http="<[http://weather.yahooapis.com/forecastrss?w=554890&u=c:60000:XSLT(yahoo_weather_code.xsl)]"}
+
+Group Wind_Chart													(Wind)
+Number Wind_Speed 		"Vind, hastighed [%.1f KM/t]"	<windy> (Wind_Chart) { http="<[http://weather.yahooapis.com/forecastrss?w=554890&u=c:60000:XSLT(yahoo_weather_wind_speed.xsl)]" }
+Number Wind_Speed_Max 		"Højeste idag [%.1f KM/t]"	<windy> (__Wind_Chart)
+Number Wind_Speed_Min 		"Laveste idag [%.1f KM/t]"	<windy> (__Wind_Chart)
+Number Wind_Chart_Period		"Chart Period"
+DateTime Wind_LastUpdate		"Last Update [%1$ta %1$tR]"	<clock>
+
+/* my stuff: mpd */
+
+Switch Mpd_Startstop   "Start/Stop"    (Music)  { mpd="ON:nathue:play, OFF:nathue:stop" }
+Switch Mpd_Playlist   "Normal/Wefunk"      { exec="ON:/opt/openhab/scripts/start_mpd, OFF:/opt/openhab/scripts/start_mpd_wefunk" }
+Switch Mpd_Next   "Next"    (Music)  { mpd="ON:nathue:next", autoupdate="false" }
+Switch Mpd_Prev   "Prev"    (Music)  { mpd="ON:nathue:prev", autoupdate="false" }
+Switch Mpd_Next_Prev   "Next/Prev"    (Music)  { mpd="ON:nathue:next, OFF:nathue:prev" }
+String CurrentTrack    "Current track [%s]" { mpd="TITLE:nathue:tracktitle" }
+String CurrentArtist    "Current artist [%s]" { mpd="ARTIST:nathue:trackartist" }
+
+/* my stuff: roomba */
+
+Group 	Roomba_Battery_Chart	"Battery Condition"		(RoombaChart)
+Number	Roomba_Battery		"Battery Condition [%s]"		(Roomba, Roomba_Voltage_Chart)
+Number	Roomba_Current		"Current [%s]"		(Roomba)
+Number	Roomba_Charge		"Charge [%s]"		(Roomba)
+Number	Roomba_Distance		"Charge [%s]"		(Roomba)
+Number	Roomba_Capacity		"Capacity [%s]"		(Roomba)
+String	Roomba_Job		"Status [%s]"	<user_bender>	(Roomba)
+Number  Roomba_HarKoert		"Kørsler siden tømt [%s]"		(Roomba)
+
+Number	Roomba_Mode		"Roomba"			<user_bender>
+
+/* my stuff: flower power */
+
+Group FP1_Temp_Chart													(TemperatureFP1)
+Number FP1_Temp        "Temperatur, Flower Power [%.1f °C]"   <temperature> (FP1_Temp_Chart)
+Number FP1_Temp_Max 		"Todays Maximum [%.1f °C]"	<temperature> (__FP1_Temp_Chart)
+Number FP1_Temp_Min 		"Todays Minimum [%.1f °C]"	<temperature> (__FP1_Temp_Chart)
+
+Group FP1_Light_Chart													(Lux)
+Number FP1_Light              "Lys, Flower Power [%.0f Lux]"   <sun>         (FP1, FP1_Light_Chart)
+Number FP1_Light_Max 		"Todays Maximum [%.1f Lux]"	<sun> (__FP1_Light_Chart)
+Number FP1_Light_Min 		"Todays Minimum [%.1f Lux]"	<sun> (__FP1_Light_Chart)
+
+Group FP1_Humidity_Chart												(Humidity)
+Number FP1_Humidity   "Jordfugtighed, Flower Power [%.0f %%]"  <garden>     (FP1, FP1_Humidity_Chart)
+Number FP1_Humidity_Max 		"Todays Maximum [%.1f %%]"	<garden> (__FP1_Humidity_Chart)
+Number FP1_Humidity_Min 		"Todays Minimum [%.1f %%]"	<garden> (__FP1_Humidity_Chart)
+
+Group FP1_Battery_Chart												(Battery)
+Number FP1_Battery   "Batteri, Flower Power [%.0f %%]"  <garden>     (FP1, FP1_Battery_Chart)
+
+/* my stuff: fozzie */
+Group Fozzie
+Group  FozzieWeight_Chart									(Ding)
+Group  FozzieShit_Chart										(Ding)
+Group  FozzieTime_Chart										(Ding)
+Number FozzieWeight			"Fozzie Vægt [%s] gram"		<cat>			(FozzieWeight_Chart)
+Number FozzieShit			"Fozzie Prut Mængde [%s] gram"	<cat>			(FozzieShit_Chart)
+Number FozzieTime			"Fozzie Tid på Bakken [%s] sek"	<cat>			(FozzieTime_Chart)
+String FozzieLast			"Fozzie Sidste Prut [%s]"	<cat>			(Ding)
+
+/* my stuff: misc */
+Switch	occupiedState			"Nogen hjemme [MAP(occupied.map):%s]"					(occupiedState)
+Switch	nightState			"Godnat"
+Switch	automationState			"Automatisering"
+Switch	lightautomationState		"Automatisk lys"
+Switch	toiletautomationState		"Automatisk lys, toilet"
+Switch	heatautomationState		"Automatisk temperatur"
+Switch	roombaautomationState		"Automatisk støvsuger"
+Switch  guestState			"Gæster i lejligheden"
+Switch	HansVaekning			"Hans Vækkeur"
+Switch	natToilet			"Nattoilet"	(scriptSwitches)	{ exec="OFF:/opt/openhab/scripts/huepl bri 6 1, ON:/opt/openhab/scripts/huepl bri 6 1" }
+Switch	nightMode			"nightMode"	(scriptSwitches)	{ exec="OFF:/opt/openhab/scripts/lightreset, ON:/opt/openhab/scripts/nightlight" }
+Switch	TVlys				"TVlys"		(scriptSwitches)	{ exec="OFF:/opt/openhab/scripts/tvlys OFF, ON:/opt/openhab/scripts/tvlys ON" }
+Number Scene_General			"Scene"					<house>
+Number Scene_Musik			"Hans Anlæg"					<sofa>
+Number TemperatureAverage		"Temperatur (gns.) [%s] C"					<temperature>
+String VoiceCommand
+
+
+Group  Cracksrv				(Cracksrv)	
+Group  Cracksrv_Root_Chart		(Cracksrv)
+Number Cracksrv_Root			"Cracksrv Root Full [%s] %"					<pc> (Cracksrv,Cracksrv_Root_Chart)
+Group  Cracksrv_Average_Chart		(Cracksrv)
+Number Cracksrv_Average			"Cracksrv /Space Full [%s] %"					<pc> (Cracksrv,Cracksrv_Average_Chart)
+Group  Cracksrv_Load_Chart		(Cracksrv)
+Number Cracksrv_Load			"Cracksrv Load 15m [%s]"					<pc> (Cracksrv,Cracksrv_Load_Chart)
+Group  Cracksrv_Temp_Chart		(Cracksrv)
+Number Cracksrv_Temp			"Cracksrv CPU Temp [%s] °C"					<pc> (Cracksrv,Cracksrv_Temp_Chart)
+Group  Cracksrv_MHz_Chart		(Cracksrv)
+Number Cracksrv_MHz			"Cracksrv CPU speed (Avg) [%s] MHz"				<pc> (Cracksrv,Cracksrv_MHz_Chart)
+Group  Cracksrv_Mem_Chart		(Cracksrv)
+Number Cracksrv_Mem			"Cracksrv MEM used [%s] MB"					<pc> (Cracksrv,Cracksrv_Mem_Chart)
+Group  Cracksrv_Tor_Chart		(Cracksrv)
+Number Cracksrv_Tor			"Cracksrv TOR connections [%s]"					<pc> (Cracksrv,Cracksrv_Tor_Chart)
+Group  Cracksrv_Bcache_Hit_Ratio_Chart		(Cracksrv)
+Number Cracksrv_Bcache_Hit_Ratio	"Cracksrv / Bcache HitRatio [%s] %"				<pc> (Cracksrv,Cracksrv_Bcache_Hit_Ratio_Chart)
+Group  Cracksrv_Bcache_Wearout_Chart		(Cracksrv)
+Number Cracksrv_Bcache_Wearout	"Cracksrv Bcache SSD WearOut [%s] %"				<pc> (Cracksrv,Cracksrv_Bcache_Wearout_Chart)
+
+Group  Datacenter				(Datacenter)	
+Group  Datacenter_Root_Chart		(Datacenter)
+Number Datacenter_Root			"Datacenter Root Full [%s] %"					<pc> (Datacenter,Datacenter_Root_Chart)
+Group  Datacenter_Vz_Chart		(Datacenter)
+Number Datacenter_Vz			"Datacenter /Vz Full [%s] %"					<pc> (Datacenter,Datacenter_Vz_Chart)
+Group  Datacenter_VzSecure_Chart	(Datacenter)
+Number Datacenter_VzSecure		"Datacenter /VzSecure Full [%s] %"				<pc> (Datacenter,Datacenter_VzSecure_Chart)
+Group  Datacenter_Backup_Chart		(Datacenter)
+Number Datacenter_Backup		"Datacenter Backup Full [%s] %"					<pc> (Datacenter,Datacenter_Backup_Chart)
+Group  Datacenter_Load_Chart		(Datacenter)
+Number Datacenter_Load			"Datacenter Load 15m [%s]"					<pc> (Datacenter,Datacenter_Load_Chart)
+Group  Datacenter_Temp_Chart		(Datacenter)
+Number Datacenter_Temp			"Datacenter CPU Temp [%s] °C"					<pc> (Datacenter,Datacenter_Temp_Chart)
+Group  Datacenter_MHz_Chart		(Datacenter)
+Number Datacenter_MHz			"Datacenter CPU speed (Avg) [%s] MHz"					<pc> (Datacenter,Datacenter_MHz_Chart)
+Group  Datacenter_Mem_Chart		(Datacenter)
+Number Datacenter_Mem			"Datacenter MEM used [%s] MB"					<pc> (Datacenter,Datacenter_Mem_Chart)
+
+Group  Arduino									(All)	
+
+Group  ArduinoLDR_Chart										(Ding)
+Group  ArduinoDHThumid_Chart									(Ding)
+Group  ArduinoDHTtemp_Chart									(Ding)
+Group  ArduinoSmoke_Chart									(Ding)
+Group  ArduinoBMP180temp_Chart									(Ding)
+Group  ArduinoPressure_Chart									(Ding)
+/*
+Number ArduinoLDR		"Arduino LDR Sensor [%s] Lys"					(Arduino,ArduinoLDR_Chart)
+Number ArduinoDHThumid		"Arduino DHThumid Dims [%s] %"						(Arduino,ArduinoDHThumid_Chart)
+Number ArduinoDHTtemp		"Arduino DHTtemp Dims [%s] °C"						(Arduino,ArduinoDHTtemp_Chart)
+Number ArduinoBMP180temp	"Arduino BMP180temp [%s] °C"						(Arduino,ArduinoBMP180temp_Chart)
+Number ArduinoPressure		"Arduino Pressure [%s] °C"						(Arduino,ArduinoPressure_Chart)
+Number ArduinoSmoke		"Arduino Smoke Dims [%s] °C"					(Arduino,ArduinoSmoke_Chart)
+Number ArduinoTest		"Arduino Test °C"				//	(Arduino,ArduinoSmoke_Chart)
+*/
+
+/* Dimmer 1 */
+Number Dimmer1_LDR		"Dimmer1 LDR Sensor [%s] Lys"						(Arduino,ArduinoLDR_Chart)
+Number Dimmer1_HUMID1		"Dimmer1 DHThumid Dims [%s] %"						(Arduino,ArduinoDHThumid_Chart)
+Number Dimmer1_TEMP1		"Dimmer1 DHTtemp Dims [%s] °C"						(Arduino,ArduinoDHTtemp_Chart)
+Number Dimmer1_HUMID2		"Dimmer1 DHThumid 2 Dims [%s] %"					(Arduino,ArduinoDHThumid_Chart)
+Number Dimmer1_TEMP2		"Dimmer1 DHTtemp 2 Dims [%s] °C"					(Arduino,ArduinoDHTtemp_Chart)
+Number Dimmer1_RAIN		"Dimmer1 RAIN 2 Dims [%s]"						(Arduino)
+Switch Dimmer1_WINDOW		"Dimmer1 Vindue"							(Arduino)
+Contact Dimmer1_PIR		"Dimmer1 PIR"							(Arduino)
+
+
+/* ASTRO items - provides info on sunrise / sunset */
+Group Astro	(All)
+
+// shows the sunrise
+String Sunrise_Time  "Sunrise [%1$tH:%1$tM]" <sun> (Astro) {astro="planet=sun, type=rise, property=start"}
+// shows the sunset
+String Sunset_Time   "Sunset [%1$tH:%1$tM]" <sun> (Astro)  {astro="planet=sun, type=set, property=end"}
+
+// schedules a event which starts at sunrise, updating the Switch with ON, followed by a OFF
+Switch Sunrise_Event  {astro="planet=sun, type=rise, property=start"}
+// schedules a event which starts 10 minutes AFTER sunrise
+Switch Sunrise_Event  {astro="planet=sun, type=rise, property=start, offset=10"}
+// schedules a event which starts 10 minutes BEFORE sunrise
+Switch Sunrise_Event {astro="planet=sun, type=rise, property=start, offset=-10"}
+// schedules a event which starts 30 minutes BEFORE sunset:
+Switch Sunset_Event  {astro="planet=sun, type=set, property=end, offset=-30"}
+
+// displays the start, end and duration of the astroDawn
+String Astro_Dawn_Start        "Astro Dawn Start [%1$tH:%1$tM]" <sun> (Astro)  {astro="planet=sun, type=astroDawn, property=start"}
+String Astro_Dawn_End          "Astro Dawn End [%1$tH:%1$tM]" <sun> (Astro)   {astro="planet=sun, type=astroDawn, property=end"}
+// duration in minutes
+Number   Astro_Dawn_Duration     "Astro Dawn Duration [%f]"  <sun> (Astro)      {astro="planet=sun, type=astroDawn, property=duration"}
+// duration formatted to a string, e.g. 02:32 (2 hours, 32 minutes)
+String   Astro_Dawn_Duration_Str "Astro Dawn Duration [%s]"  <sun> (Astro)      {astro="planet=sun, type=astroDawn, property=duration"}
+
+// azimuth and elevation
+Number   Azimuth        "Azimuth [%.2f]"  <sun> (Astro)   {astro="planet=sun, type=position, property=azimuth"}
+Number   Elevation      "Elevation [%.2f]" <sun> (Astro)  {astro="planet=sun, type=position, property=elevation"}
+
+// zodiac
+String Zodiac_Start   "Zodiac Start [%1$td.%1$tm.%1$tY]" <sun> (Astro)  {astro="planet=sun, type=zodiac, property=start"}
+String Zodiac_End     "Zodiac End [%1$td.%1$tm.%1$tY]"   <sun> (Astro)  {astro="planet=sun, type=zodiac, property=end"}
+String   Zodiac_Sign    "Current zodiac [%s]"              <sun> (Astro)  {astro="planet=sun, type=zodiac, property=sign"}
+
+// season
+String Season_Name      "Season [%s]"                           <sun> (Astro)  {astro="planet=sun, type=season, property=name"}
+String Season_Spring  "Spring [%1$td.%1$tm.%1$tY %1$tH:%1$tM]" <sun> (Astro) {astro="planet=sun, type=season, property=spring"}
+String Season_Summer  "Summer [%1$td.%1$tm.%1$tY %1$tH:%1$tM]" <sun> (Astro) {astro="planet=sun, type=season, property=summer"}
+String Season_Autumn  "Autumn [%1$td.%1$tm.%1$tY %1$tH:%1$tM]" <sun> (Astro) {astro="planet=sun, type=season, property=autumn"}
+String Season_Winter  "Winter [%1$td.%1$tm.%1$tY %1$tH:%1$tM]" <sun> (Astro) {astro="planet=sun, type=season, property=winter"}
+
+
+// eclipse
+String Sun_Eclipse_Total   "Sun total eclipse [%1$td.%1$tm.%1$tY %1$tH:%1$tM]" <sun> (Astro)  {astro="planet=sun, type=eclipse, property=total"}
+String Sun_Eclipse_Partial "Sun partial eclipse [%1$td.%1$tm.%1$tY %1$tH:%1$tM]" <sun> (Astro) {astro="planet=sun, type=eclipse, property=partial"}
+String Sun_Eclipse_Ring    "Sun ring eclipse [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"  <sun> (Astro)  {astro="planet=sun, type=eclipse, property=ring"}
+
+String Moon_Eclipse_Total    "Moon total eclipse [%1$td.%1$tm.%1$tY %1$tH:%1$tM]" <moon> (Astro)   {astro="planet=moon, type=eclipse, property=total"}
+String Moon_Eclipse_Partial  "Moon partial eclipse [%1$td.%1$tm.%1$tY %1$tH:%1$tM]" <moon> (Astro) {astro="planet=moon, type=eclipse, property=partial"}
+
+
+
+/* active groups */
+Group:Switch:OR(ON, OFF) 		Lights 		"All Lights [(%d)]" 								(All)
+Group:Switch:OR(ON, OFF) 		Heating 	"No. of Active Heatings [(%d)]" 	<heating> 		(All)
+Group:Contact:OR(OPEN, CLOSED) 	Windows 	"Open windows [(%d)]"				<contact>		(All)
+
+/* Demo items */
+
+Switch DemoSwitch				"Switch"
+Dimmer DimmedLight				"Dimmer [%d %%]"		<slider>
+Color  RGBLight					"RGB Light"				<slider>
+Rollershutter DemoShutter	 	"Roller Shutter"
+Dimmer DemoBlinds			 	"Blinds [%d %%]"		<rollershutter>
+Number Scene_General			"Scene"					<sofa>
+Number Radio_Station			"Radio"					<network>
+Dimmer Volume 					"Volume [%.1f %%]"
+Number Temperature_Setpoint		"Temperature [%.1f °C]" <temperature>
+
+
+

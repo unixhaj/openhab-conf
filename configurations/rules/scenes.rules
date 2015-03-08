@@ -1,0 +1,285 @@
+import org.openhab.core.library.types.*
+import org.openhab.core.persistence.*
+import org.openhab.model.script.actions.*
+
+var String oldScene = null
+
+rule "scene selection night"
+when
+	Item Scene_General received command 0
+then
+	logInfo("mylog", oldScene + " -> Godnat")
+	executeCommandLine("/opt/openhab/scripts/xbmcnotification Scene Skift: Godnat")
+	if (TVlys.state == ON) {
+		sendCommand(TVlys, OFF)
+		Thread::sleep(200)
+	}
+	if (Toggle_1.state == ON) {
+		sendCommand(Toggle_1, OFF)
+		Thread::sleep(200)
+	}
+	if (Toggle_2.state == ON) {
+		sendCommand(Toggle_2, OFF)
+		Thread::sleep(200)
+	}
+	if (Toggle_3.state == ON) {
+		sendCommand(Toggle_3, OFF)
+		Thread::sleep(200)
+	}
+	if (Toggle_8.state == ON) {
+		sendCommand(Toggle_8, OFF)
+		Thread::sleep(200)
+	}
+	if (Toggle_9.state == ON) {
+		sendCommand(Toggle_9, OFF)
+		Thread::sleep(200)
+	}
+	if (Toggle_4.state == ON) {
+		sendCommand(Toggle_4, OFF)
+		Thread::sleep(200)
+	}
+	if (Toggle_5.state == ON) {
+		sendCommand(Toggle_5, OFF)
+		Thread::sleep(200)
+	}
+	sendCommand(nightMode, ON)
+	Thread::sleep(2000)
+	sendCommand(Toggle_6, OFF)
+	Thread::sleep(2000)
+	sendCommand(Toggle_6, OFF)
+	Thread::sleep(2000)
+	sendCommand(Fibaroswitch_1, OFF)
+	sendCommand(Fibaroswitch_2, OFF)
+	oldScene = "Godnat"
+end
+
+
+
+
+rule "scene selection tv"
+when
+	Item Scene_General received command 1
+then
+	logInfo("mylog", oldScene + " -> TV")
+	executeCommandLine("/opt/openhab/scripts/xbmcnotification Scene Skift: TV+Film")
+	if (Toggle_1.state == OFF) {
+		sendCommand(Toggle_1, ON)
+		Thread::sleep(200)
+	}
+	if (nightMode.state != OFF) {
+		sendCommand(nightMode, OFF)
+		Thread::sleep(2000)
+	}	
+	sendCommand(TVlys, ON)
+	Thread::sleep(200)
+	sendCommand(Toggle_6, OFF)
+	Thread::sleep(200)
+	sendCommand(Toggle_1, OFF)
+	Thread::sleep(200)
+	sendCommand(Toggle_2, OFF)
+	Thread::sleep(200)
+	sendCommand(Toggle_3, OFF)
+	Thread::sleep(200)
+	sendCommand(Toggle_8, OFF)
+	Thread::sleep(200)
+	sendCommand(Toggle_9, OFF)
+	Thread::sleep(200)
+	sendCommand(Toggle_4, OFF)
+	Thread::sleep(200)
+	sendCommand(Toggle_5, OFF)
+	Thread::sleep(200)
+	oldScene = "TV"
+end
+
+rule "scene selection Lys taend"
+when
+	Item Scene_General received command 2
+then
+	logInfo("mylog", oldScene + " -> Alt lys")
+	executeCommandLine("/opt/openhab/scripts/xbmcnotification Scene Skift: Alt lys")
+	if (Toggle_1.state == OFF) {
+		sendCommand(Toggle_1, ON)
+		Thread::sleep(200)
+	}
+	if (Toggle_2.state == OFF) {
+		sendCommand(Toggle_2, ON)
+		Thread::sleep(200)
+	}
+	if (Toggle_3.state == OFF) {
+		sendCommand(Toggle_3, ON)
+		Thread::sleep(200)
+	}
+	if (Toggle_8.state == OFF) {
+		sendCommand(Toggle_8, ON)
+		Thread::sleep(200)
+	}
+	if (Toggle_9.state == OFF) {
+		sendCommand(Toggle_9, ON)
+		Thread::sleep(200)
+	}
+	if (Toggle_4.state == OFF) {
+		sendCommand(Toggle_4, ON)
+		Thread::sleep(200)
+	}
+	if (Toggle_5.state == OFF) {
+		sendCommand(Toggle_5, ON)
+		Thread::sleep(200)
+	}
+	if (TVlys.state == ON) {
+		Thread::sleep(200)
+		sendCommand(TVlys, OFF)
+	}
+	sendCommand(nightMode, OFF)
+	oldScene = "Alt lys"
+end
+
+
+rule "scene selection Lys slukket"
+when
+	Item Scene_General received command 3
+then
+	logInfo("mylog", oldScene + " -> Slukket lys")
+	executeCommandLine("/opt/openhab/scripts/xbmcnotification Scene Skift: Slukket lys")
+	if (TVlys.state == ON ) {
+		sendCommand(TVlys, OFF)
+		Thread::sleep(200)
+	}
+	if (Toggle_1.state == ON) {
+		sendCommand(Toggle_1, OFF)
+		Thread::sleep(200)
+	}
+	if (Toggle_2.state == ON) {
+		sendCommand(Toggle_2, OFF)
+		Thread::sleep(200)
+	}
+	if (Toggle_3.state == ON) {
+		sendCommand(Toggle_3, OFF)
+		Thread::sleep(200)
+	}
+	if (Toggle_8.state == ON) {
+		sendCommand(Toggle_8, OFF)
+		Thread::sleep(200)
+	}
+	if (Toggle_9.state == ON) {
+		sendCommand(Toggle_9, OFF)
+		Thread::sleep(200)
+	}
+	if (Toggle_4.state == ON) {
+		sendCommand(Toggle_4, OFF)
+		Thread::sleep(200)
+	}
+	if (Toggle_5.state == ON) {
+		sendCommand(Toggle_5, OFF)
+		Thread::sleep(200)
+	}
+	oldScene = "Slukket lys"
+end
+
+rule "scene selection Lys kun stue og koekken"
+when
+	Item Scene_General received command 4
+then
+	logInfo("mylog", oldScene + " -> Lys Stue og køkken")
+	executeCommandLine("/opt/openhab/scripts/xbmcnotification Scene Skift: Lys Stue og køkken")
+	if (nightMode.state == ON) {
+		sendCommand(nightMode, OFF)
+		Thread::sleep(2000)
+	}
+	if (Toggle_3.state == OFF) {
+		sendCommand(Toggle_3, ON)
+		Thread::sleep(200)
+	}
+	if (Toggle_8.state == OFF) {
+		sendCommand(Toggle_8, ON)
+		Thread::sleep(200)
+	}
+	if (Toggle_9.state == OFF) {
+		sendCommand(Toggle_9, ON)
+		Thread::sleep(200)
+	}
+	if (TVlys.state == ON ) {
+		sendCommand(TVlys, OFF)
+		Thread::sleep(200)
+	}
+	if (Toggle_2.state == ON) {
+		sendCommand(Toggle_2, OFF)
+		Thread::sleep(200)
+	}
+	if (Toggle_4.state == ON) {
+		sendCommand(Toggle_4, OFF)
+		Thread::sleep(200)
+	}
+	if (Toggle_5.state == OFF) {
+		sendCommand(Toggle_5, ON)
+		Thread::sleep(200)
+	}
+	if (Toggle_1.state == ON) {
+		sendCommand(Toggle_1, OFF)
+		Thread::sleep(200)
+	}
+	oldScene = "Lys Stue og Køkken"
+end
+
+
+rule "scene selection Lys gang og koekken"
+when
+	Item Scene_General received command 5
+then
+	logInfo("mylog", oldScene + " -> Lys Gang og køkken")
+	executeCommandLine("/opt/openhab/scripts/xbmcnotification Scene Skift: Lys Gang og køkken")
+	if (TVlys.state == ON ) {
+		sendCommand(TVlys, OFF)
+		Thread::sleep(200)
+	}
+	if (nightMode.state == ON) {
+		sendCommand(nightMode, OFF)
+		Thread::sleep(2000)
+	}
+	sendCommand(Toggle_3, OFF)
+	Thread::sleep(200)
+	sendCommand(Toggle_8, OFF)
+	Thread::sleep(200)
+	sendCommand(Toggle_9, OFF)
+	Thread::sleep(200)
+	sendCommand(Toggle_1, OFF)
+	Thread::sleep(200)
+	sendCommand(Toggle_2, ON)
+	Thread::sleep(200)
+	sendCommand(Toggle_4, ON)
+	Thread::sleep(200)
+	sendCommand(Toggle_5, ON)
+	Thread::sleep(200)
+	oldScene = "Lys Gang og Køkken"
+end
+
+
+rule "XBMC pause"
+when
+	Item XBMC_State changed to Pause or
+	Item XBMC_State changed to Stop
+then
+	if (Scene_General.state == 1) {
+		sendCommand(Toggle_2, ON)
+		sendCommand(Toggle_3, ON)
+		sendCommand(Toggle_4, ON)
+		sendCommand(Toggle_5, ON)
+		sendCommand(Toggle_6, ON)
+	}
+end
+
+rule "XBMC play"
+when
+	Item XBMC_State changed to Play 
+then
+	if (Scene_General.state == 1) {
+		sendCommand(Toggle_1, OFF)
+		sendCommand(Toggle_2, OFF)
+		sendCommand(Toggle_3, OFF)
+		sendCommand(Toggle_4, OFF)
+		sendCommand(Toggle_5, OFF)
+		sendCommand(Toggle_6, OFF)
+		sendCommand(Toggle_7, ON)
+		sendCommand(Toggle_8, OFF)
+		sendCommand(Toggle_9, OFF)
+	}
+end
