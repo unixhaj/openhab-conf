@@ -83,7 +83,6 @@ sitemap demo label="Hovedmenu"
 
 	Frame label="Støvsuger" {
 		Selection item=Roomba_Mode label="Roomba" mappings=[0="Ready", 1="Dock", 2="Støvsug", 3="Kattebakke", 4="Tøm Roomba"]
-		//Selection item=Roomba_Mode label="Roomba" mappings=[0="Dock", 1="Stop", 2="Støvsug", 3="Kattebakke", 4="Tøm Roomba"]
 		Text item=Roomba_Job
 	}
 			
@@ -247,14 +246,6 @@ sitemap demo label="Hovedmenu"
 					Chart item=Fibaroswitch_2_Chart period=Y refresh=10000
 				}
 			}
-			Text item=Roomba_Voltage icon="user_bender" {
-				Frame label="Roomba Batteri Volt" {
-					Chart item=Roomba_Voltage_Chart period=D refresh=10000
-					Chart item=Roomba_Voltage_Chart period=W refresh=10000
-					Chart item=Roomba_Voltage_Chart period=M refresh=10000
-					Chart item=Roomba_Voltage_Chart period=Y refresh=10000
-				}
-			}
 			Text item=katrine icon="user_bender" {
 				Frame label="Katrine Telefon Batteri" {
 					Chart item=katrine_Chart period=D refresh=10000
@@ -284,7 +275,6 @@ sitemap demo label="Hovedmenu"
 			Group label="Fozzie Test" icon="cat" {
 			Text item=FozzieWeight icon="cat" {
 				Frame label="Fozzie Fed" {
-//					Chart item=FozzieWeight_Chart period=D refresh=10000
 					Chart item=FozzieWeight_Chart period=W refresh=10000
 					Chart item=FozzieWeight_Chart period=M refresh=10000
 					Chart item=FozzieWeight_Chart period=Y refresh=10000
@@ -292,7 +282,6 @@ sitemap demo label="Hovedmenu"
 			}
 			Text item=FozzieShit icon="user_bender" {
 				Frame label="Fozzie Lort+Tis" {
-//					Chart item=FozzieShit_Chart period=D refresh=10000
 					Chart item=FozzieShit_Chart period=W refresh=10000
 					Chart item=FozzieShit_Chart period=M refresh=10000
 					Chart item=FozzieShit_Chart period=Y refresh=10000
@@ -300,7 +289,6 @@ sitemap demo label="Hovedmenu"
 			}
 			Text item=FozzieTime icon="user_bender" {
 				Frame label="Fozzie Tid på bakken" {
-//					Chart item=FozzieTime_Chart period=D refresh=10000
 					Chart item=FozzieTime_Chart period=W refresh=10000
 					Chart item=FozzieTime_Chart period=M refresh=10000
 					Chart item=FozzieTime_Chart period=Y refresh=10000

@@ -82,9 +82,11 @@ rule "Roomba støvsug"
 when
 	Item Multiswitch_1_6 received update
 then
-	logInfo("mylog", "Støvsuger")
-	sendCommand(Roomba_Mode, 2)
-	roombaHarKoert = true
+	if (occupiedState.state == ON) {
+		logInfo("mylog", "Støvsuger")
+		sendCommand(Roomba_Mode, 2)
+		roombaHarKoert = true
+	}
 end
 
 rule "XBMC pause play"

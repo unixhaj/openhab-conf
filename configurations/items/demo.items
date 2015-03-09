@@ -233,7 +233,7 @@ String CurrentArtist    "Current artist [%s]" { mpd="ARTIST:nathue:trackartist" 
 /* my stuff: roomba */
 
 Group 	Roomba_Battery_Chart	"Battery Condition"		(RoombaChart)
-Number	Roomba_Battery		"Battery Condition [%s]"		(Roomba, Roomba_Voltage_Chart)
+Number	Roomba_Battery		"Battery Condition [%s]"		(Roomba)
 Number	Roomba_Current		"Current [%s]"		(Roomba)
 Number	Roomba_Charge		"Charge [%s]"		(Roomba)
 Number	Roomba_Distance		"Charge [%s]"		(Roomba)
