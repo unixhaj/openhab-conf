@@ -189,7 +189,7 @@ end
 
 rule "Dag temperatur adjustment"
 when
-	Time cron "0 */30 9,10,11,12,13,14,15,16,17,18,19,20,21 * * ?"
+	Time cron "0 */15 9,10,11,12,13,14,15,16,17,18,19,20,21 * * ?"
 then	
 	if (!Termostat_Dag.changedSince(now.minusHours(2)) {
 		executeCommandLine("/opt/openhab/scripts/adjust_temp Dag")
