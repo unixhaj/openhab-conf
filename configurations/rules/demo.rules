@@ -245,6 +245,14 @@ then
 	}
 end
 
+rule "Log døgnskifte"
+when
+	Time cron "0 0 0 * * ?"
+then
+	logInfo("mylog", "Døgnskifte")
+end
+
+
 rule "Check router status voice alert if down"
 when
 	Time cron "0 35 8-21 * * ?"
@@ -491,7 +499,7 @@ then
 			executeCommandLine("/opt/openhab/scripts/huepl bri 6 0")
                 	Thread::sleep(100)
 			executeCommandLine("/opt/openhab/scripts/huepl bri 5 0")
-		else	{
+		else {
 			executeCommandLine("/opt/openhab/scripts/huepl bri 6 200")
                 	Thread::sleep(100)
 			executeCommandLine("/opt/openhab/scripts/huepl bri 5 250")
@@ -648,20 +656,27 @@ then
 	if (occupiedState.state == OFF) {
 		executeCommandLine("/home/haj/bin/alarm.sh Lejlighed: Fordør åben")
 	} 
-        if ((HansTelefon.state == ON && HansTelefon.historicState(now.minusMinutes(5)).state == OFF) || (HansTelefonBT.state == ON && HansTelefonBT.historicState(now.minusMinutes(5)).state == OFF) && (hanssnakFlag != true))
+        if ((HansTelefon.state == ON && HansTelefon.historicState(now.minusMinutes(5)).state == OFF) || (HansTelefonBT.state == ON && HansTelefonBT.historicState(now.minusMinutes(5)).state == OFF))
 	{
 		hanssnakFlag = true
-		logInfo("mylog", "Hans er kommet hjem")
-		executeCommandLine("/opt/openhab/scripts/welcomehome.sh hans")
-		Thread::sleep(15000)
 	}
-	if ((KatrineTelefon.state == ON && KatrineTelefon.historicState(now.minusMinutes(5)).state == OFF) || (KatrineTelefonBT.state == ON && KatrineTelefonBT.historicState(now.minusMinutes(5)).state == OFF) && katrinesnakFlag != true)
+	if ((KatrineTelefon.state == ON && KatrineTelefon.historicState(now.minusMinutes(5)).state == OFF) || (KatrineTelefonBT.state == ON && KatrineTelefonBT.historicState(now.minusMinutes(5)).state == OFF))
 	{
 		katrinesnakFlag = true
+	}
+	if (hanssnakFlag == true && katrinesnakFlag == true) {
+		logInfo("mylog", "Hans & Katrine er kommet hjem")
+		executeCommandLine("/opt/openhab/scripts/welcomehome.sh hanskatrine")
+	}
+	else if (hanssnakFlag != true && katrinesnakFlag == true) {
 		logInfo("mylog", "Katrine er kommet hjem")
 		executeCommandLine("/opt/openhab/scripts/welcomehome.sh katrine")
-		Thread::sleep(15000)
+	}	
+	else if (hanssnakFlag == true && katrinesnakFlag != true) {
+		logInfo("mylog", "Hans er kommet hjem")
+		executeCommandLine("/opt/openhab/scripts/welcomehome.sh hans")
 	}
+	
 end
 
 rule "Dørsensor For"
