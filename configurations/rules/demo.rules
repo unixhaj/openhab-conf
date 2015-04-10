@@ -204,8 +204,13 @@ then
 	{
 		termostat_diff = Termostat_Diff_Dag.state
 		termostat_base = Termostat_Dag.state
-		termostat = (termostat_diff + termostat_base)
-//		logInfo("mylog", "Termostat: " + termostat)
+		if (termostat_diff == 0) {
+			termostat = 16
+//			termostat = (termostat_base - 2)
+		} else {
+			termostat = (termostat_diff + termostat_base)
+		}
+		logInfo("mylog", "Termostat: " + termostat)
 		sendCommand(Termostat_bed_setpoint, termostat)
 		sendCommand(Termostat_stue_setpoint, termostat)
 	}
@@ -228,8 +233,13 @@ then
 	{
 		termostat_diff = Termostat_Diff_Nat.state
 		termostat_base = Termostat_Nat.state
-		termostat = (termostat_diff + termostat_base)
-//		logInfo("mylog", "Termostat: " + termostat)
+		if (termostat_diff == 0) {
+			termostat = 16
+//			termostat = (termostat_base - 2)
+		} else {
+			termostat = (termostat_diff + termostat_base)
+		}
+		logInfo("mylog", "Termostat: " + termostat)
 		sendCommand(Termostat_bed_setpoint, termostat)
 		sendCommand(Termostat_stue_setpoint, termostat)
 	}
@@ -641,6 +651,8 @@ rule "Dørsensor For"
 when
 	Item Door_For changed to OPEN
 then
+	hanssnakFlag = false
+	katrinesnakFlag = false
 	logInfo("mylog", "Fordør åben")
 	if (occupiedState.state == OFF) {
       		Thread::sleep(10000)
@@ -1058,3 +1070,12 @@ then
 	logInfo("mylog", FozzieWeight.state + "g kat laver " + FozzieShit.state + "g prut, på " + FozzieTime.state + " sekunder")
 end
 
+
+rule "Party Cron"
+when
+	Time cron "* * * * * ?"
+then	
+	if (Scene_General.state == 6 ) {
+			executeCommandLine("/opt/openhab/scripts/party.sh")
+	}
+end

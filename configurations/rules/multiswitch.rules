@@ -8,7 +8,7 @@ when
 	Item Multiswitch_1_1 received update or
 	Item Multiswitch_2_1 received update
 then
-	if (Scene_General.state == 0) {
+	if (Scene_General.state == 0 || Scene_General.state == 6) {
 		sendCommand(Scene_General, 2)
 	}
 	else if (Scene_General.state == 4) {

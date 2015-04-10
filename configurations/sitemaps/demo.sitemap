@@ -4,7 +4,7 @@ sitemap demo label="Hovedmenu"
 /*		Group item=Switching label="Lys" icon="firstfloor" */
 //		Switch item=Switching label="Lys (Alle)" icon="light-on" mappings=[ON="Tænd",OFF="Sluk"]
 //		Switch item=nightState icon="bedroom" mappings=[ON="Til",OFF="Fra"]
-		Selection item=Scene_General label="Tilstand" mappings=[0="Godnat", 1="Film & TV", 2="Alt Lys", 3="Intet Lys", 4="Lys Stue+Toilet+Køkken", 5="Lys Gang+Toilet+Køkken"]
+		Selection item=Scene_General label="Tilstand" mappings=[0="Godnat", 1="Film & TV", 2="Alt Lys", 3="Intet Lys", 4="Lys Stue+Toilet+Køkken", 5="Lys Gang+Toilet+Køkken", 6="Party"]
 		Group item=Switching label="Lamper" icon="lightbulb"
 /*		Group item=WhiteDimmer label="Lys (daemper)" icon="cellar"	 */
 		Switch item=TV_Status
