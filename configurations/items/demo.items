@@ -50,6 +50,7 @@ Switch Tablet                   "Tablet" <ipad>  (Network)
 Switch Hue                      "Hue" <lightbulb>  (Network)   { nh="Hue" }
 Switch TV			"TV" <video>	(Network)	{ nh="TV" }
 Switch Router			"Router" <network>	(Network)	{ nh="Router" }
+Switch Fitbit			"Fitbit" <network>	(Network)	{ nh="Fitbit" }
 
 
 /* my stuff: TV */
@@ -268,9 +269,9 @@ Group Fozzie
 Group  FozzieWeight_Chart									(Ding)
 Group  FozzieShit_Chart										(Ding)
 Group  FozzieTime_Chart										(Ding)
-Number FozzieWeight			"Fozzie Vægt [%s] gram"		<cat>			(FozzieWeight_Chart)
-Number FozzieShit			"Fozzie Prut Mængde [%s] gram"	<cat>			(FozzieShit_Chart)
-Number FozzieTime			"Fozzie Tid på Bakken [%s] sek"	<cat>			(FozzieTime_Chart)
+Number FozzieWeight			"Fozzie Vægt [%s g]"		<cat>			(FozzieWeight_Chart)
+Number FozzieShit			"Fozzie Prut Mængde [%s g]"	<cat>			(FozzieShit_Chart)
+Number FozzieTime			"Fozzie Tid på Bakken [%s s]"	<cat>			(FozzieTime_Chart)
 String FozzieLast			"Fozzie Sidste Prut [%s]"	<cat>			(Ding)
 
 /* my stuff: misc */
@@ -278,11 +279,11 @@ Switch	occupiedState			"Nogen hjemme [MAP(occupied.map):%s]"					(occupiedState)
 Switch	nightState			"Godnat"
 Switch	automationState			"Automatisering"
 Switch	lightautomationState		"Automatisk lys"
-Switch	toiletautomationState		"Automatisk lys, toilet"
-Switch	heatautomationState		"Automatisk temperatur"
-Switch	roombaautomationState		"Automatisk støvsuger"
-Switch  guestState			"Gæster i lejligheden"
-Switch	HansVaekning			"Hans Vækkeur"
+Switch	toiletautomationState		"Automatisk lys, toilet" <toilet>
+Switch	heatautomationState		"Automatisk temperatur" <temperature-max>
+Switch	roombaautomationState		"Automatisk støvsuger" <user_bender>
+Switch  guestState			"Gæster i lejligheden" <parents>
+Switch	HansVaekning			"Hans Vækkeur" <clock>
 Switch	natToilet			"Nattoilet"	(scriptSwitches)	{ exec="OFF:/opt/openhab/scripts/huepl bri 6 1, ON:/opt/openhab/scripts/huepl bri 6 1" }
 Switch	nightMode			"nightMode"	(scriptSwitches)	{ exec="OFF:/opt/openhab/scripts/lightreset, ON:/opt/openhab/scripts/nightlight" }
 Switch	TVlys				"TVlys"		(scriptSwitches)	{ exec="OFF:/opt/openhab/scripts/tvlys OFF, ON:/opt/openhab/scripts/tvlys ON" }
@@ -430,3 +431,8 @@ Number Temperature_Setpoint		"Temperature [%.1f °C]" <temperature>
 
 
 
+
+Group  Hans_Weight_Chart		(Weights)
+Number Hans_Weight		"Vægt, Hans [%.1f kg]" (Weights,Hans_Weight_Chart)
+Group  Katrine_Weight_Chart		(Weights)
+Number Katrine_Weight		"Vægt, Katrine [%.1f kg]" (Weights,Katrine_Weight_Chart)
