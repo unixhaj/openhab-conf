@@ -210,7 +210,7 @@ then
 		} else {
 			termostat = (termostat_diff + termostat_base)
 		}
-		logInfo("mylog", "Termostat: " + termostat)
+//		logInfo("mylog", "Termostat: " + termostat)
 		sendCommand(Termostat_bed_setpoint, termostat)
 		sendCommand(Termostat_stue_setpoint, termostat)
 	}
@@ -239,7 +239,7 @@ then
 		} else {
 			termostat = (termostat_diff + termostat_base)
 		}
-		logInfo("mylog", "Termostat: " + termostat)
+//		logInfo("mylog", "Termostat: " + termostat)
 		sendCommand(Termostat_bed_setpoint, termostat)
 		sendCommand(Termostat_stue_setpoint, termostat)
 	}
@@ -440,11 +440,11 @@ end
 
 rule "Auto Roomba"
 when 
-        Time cron "0 0/5 10-18 * * ?"
+        Time cron "0 0/5 10-20 * * ?"
 then
 	
 //	logInfo("mylog", "RoombaDjob" + hans_distance.state)
-	if ((!Roomba_Mode.changedSince(now.minusHours(10))) && roombaautomationState.state == ON && KatrineTelefon.state != ON && HansTelefon.state != ON && guestState.state != ON && (2.5 < hans_distance.state) && (2.5 < katrine_distance.state)) {
+	if ((!Roomba_Mode.changedSince(now.minusHours(10))) && roombaautomationState.state == ON && KatrineTelefon.state != ON && HansTelefon.state != ON && guestState.state != ON && (1.0 < hans_distance.state) && (1.0 < katrine_distance.state)) {
 		logInfo("mylog", "Starter støvsuger")
 		sendCommand(Roomba_Mode, 2)
 		roombaHarKoert = true
@@ -915,19 +915,29 @@ then
 	if (TV_Status.state == ON && HansTelefon.state == ON && XBMC_State.state == "Stop" && !XBMC_State.changedSince(now.minusMinutes(25)) && XBMC_State.changedSince(now.minusMinutes(30)) && Scene_General.state != 0 && PS3.state == OFF) {
 		executeCommandLine("/opt/openhab/scripts/xbmcnotification TV slukker snart")
 	}
-	if (TV_Status.state == ON && HansTelefon.state == ON && XBMC_State.state == "Stop" && !XBMC_State.changedSince(now.minusMinutes(31)) && XBMC_State.changedSince(now.minusMinutes(32)) && Scene_General.state != 0 && PS3.state == OFF) {
+	if (TV_Status.state == ON && HansTelefon.state == ON && XBMC_State.state == "Stop" && !XBMC_State.changedSince(now.minusMinutes(31)) && XBMC_State.changedSince(now.minusMinutes(32)) && Scene_General.state != 0 && PS3.state == OFF && XBMC_Remote.updatedSince(now.minusMinutes(4)) {
 		logInfo("mylog", "Automatisk sluk af TV")
-		sendCommand(TV_Status, OFF)
+		executeCommandLine("/usr/bin/xbmc-send --action=XBMC.CECStandby")
 	}
-	if (TV_Status.state == ON && HansTelefon.state == ON && XBMC_State.state == "Stop" && !XBMC_State.changedSince(now.minusMinutes(1)) && XBMC_State.changedSince(now.minusMinutes(4)) && Scene_General.state == 0 && PS3.state == OFF) {
+	if (TV_Status.state == ON && HansTelefon.state == ON && XBMC_State.state == "Stop" && !XBMC_State.changedSince(now.minusMinutes(1)) && XBMC_State.changedSince(now.minusMinutes(4)) && Scene_General.state == 0 && PS3.state == OFF && XBMC_Remote.updatedSince(now.minusMinutes(4)) {
 		executeCommandLine("/opt/openhab/scripts/xbmcnotification TV slukker snart")
 	}
-	if (TV_Status.state == ON && HansTelefon.state == ON && XBMC_State.state == "Stop" && !XBMC_State.changedSince(now.minusMinutes(4)) && XBMC_State.changedSince(now.minusMinutes(5)) && Scene_General.state == 0 && PS3.state == OFF) {
+	if (TV_Status.state == ON && HansTelefon.state == ON && XBMC_State.state == "Stop" && !XBMC_State.changedSince(now.minusMinutes(4)) && XBMC_State.changedSince(now.minusMinutes(5)) && Scene_General.state == 0 && PS3.state == OFF && XBMC_Remote.updatedSince(now.minusMinutes(4)) {
 		logInfo("mylog", "Automatisk sluk af TV")
-		sendCommand(TV_Status, OFF)
+		executeCommandLine("/usr/bin/xbmc-send --action=XBMC.CECStandby")
 	}
 end
-	
+
+rule "Fitbit log"
+	Item Fitbit changed
+then
+	if (Fitbit.state == ON) {
+		logInfo("mylog", "Fitbit er gået på wifi")
+	}
+	if (Fitbit.state == OFF) {
+		logInfo("mylog", "Fitbit er gået af wifi")
+	}
+end
 
 rule "KatrineTelefon log"
 	Item KatrineTelefon changed
@@ -1079,3 +1089,19 @@ then
 			executeCommandLine("/opt/openhab/scripts/party.sh")
 	}
 end
+
+
+rule "Log Hans"
+when
+	Item hans_location_street changed
+then	
+	logInfo("mylog", "Hans er på " + hans_location_street.state + ", " + hans_location_city.state + " i " + hans_location_country.state)
+end
+
+rule "Log Katrine"
+when
+	Item katrine_location_street changed
+then	
+	logInfo("mylog", "Katrine er på " + katrine_location_street.state + ", " + katrine_location_city.state + " i " + katrine_location_country.state)
+end
+

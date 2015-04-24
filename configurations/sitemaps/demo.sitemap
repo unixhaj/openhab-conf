@@ -87,7 +87,7 @@ sitemap demo label="Hovedmenu"
 	}
 			
 	Frame label="Udvidet Status og Indstillinger" {
-		Text label="Automatisering og andre indstillinger" icon="system_monitor" {
+		Text label="Automatisering og andre indstillinger" icon="setting_tools" {
 			Switch item=lightautomationState
 			Switch item=toiletautomationState
 			Switch item=roombaautomationState
@@ -246,7 +246,7 @@ sitemap demo label="Hovedmenu"
 					Chart item=Fibaroswitch_2_Chart period=Y refresh=10000
 				}
 			}
-			Text item=katrine icon="user_bender" {
+			Text item=katrine icon="battery" {
 				Frame label="Katrine Telefon Batteri" {
 					Chart item=katrine_Chart period=D refresh=10000
 					Chart item=katrine_Chart period=W refresh=10000
@@ -254,7 +254,7 @@ sitemap demo label="Hovedmenu"
 					Chart item=katrine_Chart period=Y refresh=10000
 				}
 			}
-			Text item=hans icon="user_bender" {
+			Text item=hans icon="battery" {
 				Frame label="Hans Telefon Batteri" {
 					Chart item=hans_Chart period=D refresh=10000
 					Chart item=hans_Chart period=W refresh=10000
@@ -262,7 +262,7 @@ sitemap demo label="Hovedmenu"
 					Chart item=hans_Chart period=Y refresh=10000
 				}
 			}
-			Text item=FP1_Battery icon="user_bender" {
+			Text item=FP1_Battery icon="battery" {
 				Frame label="Flower Power Batteri" {
 					Chart item=FP1_Battery_Chart period=D refresh=10000
 					Chart item=FP1_Battery_Chart period=W refresh=10000
@@ -272,7 +272,7 @@ sitemap demo label="Hovedmenu"
 			}
 		}
 		Text label="Udvidet Status & Avanceret" icon="system_monitor" {
-			Group label="Fozzie Test" icon="cat" {
+			Group label="Fozzie Kat" icon="cat" {
 			Text item=FozzieWeight icon="cat" {
 				Frame label="Fozzie Fed" {
 					Chart item=FozzieWeight_Chart period=W refresh=10000
@@ -280,22 +280,41 @@ sitemap demo label="Hovedmenu"
 					Chart item=FozzieWeight_Chart period=Y refresh=10000
 				}
 			}
-			Text item=FozzieShit icon="user_bender" {
+			Text item=FozzieShit icon="poo" {
 				Frame label="Fozzie Lort+Tis" {
 					Chart item=FozzieShit_Chart period=W refresh=10000
 					Chart item=FozzieShit_Chart period=M refresh=10000
 					Chart item=FozzieShit_Chart period=Y refresh=10000
 				}
 			}
-			Text item=FozzieTime icon="user_bender" {
+			Text item=FozzieTime icon="time_go" {
 				Frame label="Fozzie Tid på bakken" {
 					Chart item=FozzieTime_Chart period=W refresh=10000
 					Chart item=FozzieTime_Chart period=M refresh=10000
 					Chart item=FozzieTime_Chart period=Y refresh=10000
 				}
 			}
-			Text item=FozzieLast icon="user_bender"
+			Text item=FozzieLast icon="clock"
 			}
+
+			
+			Group label="Badevægt" icon="weight" {
+			Text item=Hans_Weight icon="boy0" {
+				Frame label="Hans Vægt" {
+					Chart item=Hans_Weight_Chart period=W refresh=10000
+					Chart item=Hans_Weight_Chart period=M refresh=10000
+					Chart item=Hans_Weight_Chart period=Y refresh=10000
+				}
+			}
+			Text item=Katrine_Weight icon="user_indian_female" {
+				Frame label="Katrine Vægt" {
+					Chart item=Katrine_Weight_Chart period=W refresh=10000
+					Chart item=Katrine_Weight_Chart period=M refresh=10000
+					Chart item=Katrine_Weight_Chart period=Y refresh=10000
+				}
+			}
+			}
+			
 			Group label="Arduino Test All" item=Arduino icon="user_bender" 
 			Group label="Arduino Test" icon="user_bender" {
 			Text item=ArduinoLDR icon="user_bender" {

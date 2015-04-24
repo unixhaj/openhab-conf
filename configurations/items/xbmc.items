@@ -8,3 +8,4 @@ String XBMC_Album  	 "XBMC Album [%s]"      	(xbmc)	{ xbmc="<[#livingRoom|Player
 Switch XBMC_PlayPause    "XBMC Play/Pause"     		(xbmc)	{ xbmc=">[#livingRoom|Player.PlayPause]", autoupdate="false" }
 Switch XBMC_Stop         "XBMC Stop"               	(xbmc)	{ xbmc=">[#livingRoom|Player.Stop]", autoupdate="false" }
 String XBMC_Notify       "XBMC Notify [%s]"     (Xbmc_Notify)	{ xbmc="<[#livingRoom|GUI.ShowNotification]", autoupdate="false" }
+Switch XBMC_Remote       "XBMC Remote [%s]"
