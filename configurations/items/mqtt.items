@@ -1,6 +1,6 @@
 /* my stuff: mqtt */
-Number  katrine				"Telefon Batteri [%s %%]" <battery> (Mosquitto, katrine_Chart)
-Number  hans				"Telefon Batteri [%s %%]" <battery> (Mosquitto, hans_Chart)
+Number  katrine				"Katrine Telefon Batteri [%s %%]" <battery> (Mosquitto, katrine_Chart)
+Number  hans				"Hans Telefon Batteri [%s %%]" <battery> (Mosquitto, hans_Chart)
 Number	katrine_distance		"Afstand til Hjem [%s km]" (Mosquitto)
 Number	hans_distance			"Afstand til Hjem [%s km]" (Mosquitto)
 String	katrine_location_street		"Gade [%s]"	(Mosquitto)
